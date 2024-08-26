@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Qasino in the cloud</title>
+    <th:block th:insert="~{fragments/header :: headerfiles}">
+    </th:block>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<!-- the specific part of this html -->
+<div class="container">
+    <div class="text-center">
+        <h1 th:text="${'Play - ' + qasino.navBarItems.^[sequence==3].stat}">Play</h1>
+        <div th:if="${qasino.params.suppliedGameId == 0}">
+            No Game to play
+        </div>
+        <div th:if="${qasino.params.suppliedGameId > 0 && qasino.game == null}">
+            Finish setting up the current game
+        </div>
+        <div th:if="${qasino.params.suppliedGameId > 0 && qasino.game != null}">
+            <div th:replace="~{forms/play :: selected-game}"></div>
+            <div th:replace="~{forms/play :: seats-form}"></div>
+        </div>
+        <div th:if="${qasino.params.suppliedGameId > 0 && qasino.game != null}">
+            <div th:replace="~{forms/play :: results-table}"></div>
+        </div>
+    </div>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
+</body>
+</html>

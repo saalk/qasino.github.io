@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Qasino in the cloud</title>
+    <th:block th:insert="~{fragments/header :: headerfiles}">
+    </th:block>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<!-- the specific part of this html -->
+<div class="container">
+    <div class="text-center">
+        <h1 th:text="${'League - '+qasino.navBarItems.^[sequence==5].stat}">League</h1>
+        <div th:if="${qasino.params.suppliedLeagueId > 0}">
+            Under construction ...
+        </div>
+    </div>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
+</body>
+</html>

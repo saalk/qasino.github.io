@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Qasino in the cloud</title>
+    <th:block th:insert="~{fragments/header :: headerfiles}">
+    </th:block>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<!-- the specific part of this html -->
+<div class="container">
+    <div class="text-center">
+        <!-- /* Handle the flash message */-->
+        <th:block th:if="${message != null}">
+            <!-- /* The message code is returned from the @Controller */ -->
+            <div th:replace="~{fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.username})})}">
+                &nbsp;
+            </div>
+        </th:block>
+        <h1>Welcome on the Qasino floor!</h1>
+        <span th:text="'What happened until today: ' + ${#dates.format(#dates.createNow(),'YYYY-MM-dd HH:mm')}"></span>
+        <br><br>
+        <table class="u-full-width">
+            <thead>
+            <tr>
+                <th>Table</th>
+                <th>Filter</th>
+                <th>Count</th>
+                <th>You</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${qasino.statistics.empty}">
+                <td colspan="2"> No Statistics Available</td>
+            </tr>
+            <!-- #lists is SPEL -->
+            <tr th:unless="${#lists.isEmpty(qasino.statistics)}"
+                th:each="statistic : ${qasino.statistics}">
+                <td><span th:text="${statistic.table}"> Table </span></td>
+                <td><span th:text="${statistic.filter}"> Filter </span></td>
+                <td><span th:text="${statistic.count}"> Count </span></td>
+                <td><span th:text="${statistic.visitor}"> You </span></td>
+            </tr>
+            </tbody>
+        </table>
+        <!--        </div>-->
+    </div>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
+</body>
+</html>

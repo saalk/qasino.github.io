@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<!--/*  Multiple fragments may be defined in one file */-->
+<head th:fragment="headerfiles">
+    <!-- Basic Page Needs -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Qasino in the cloud</title>
+    <meta name="description" content="A basic structure for card playing games."/>
+    <meta name="author" content="Saalk"/>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- FONT -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <!-- CSS -->
+    <!-- for thymeleaf we only need to specify the path below src/main/resources/static -->
+    <link rel="stylesheet" type="text/css" href="../../static/cssandjs/skeleton/skeleton.css" media="all"
+          th:href="@{/cssandjs/skeleton/skeleton.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/cssandjs/skeleton/normalize.css" media="all"
+          th:href="@{/cssandjs/skeleton/normalize.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/cssandjs/bootstrap/bootstrap.css" media="all"
+          th:href="@{/cssandjs/bootstrap/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/cssandjs/specific.css" media="all"
+          th:href="@{/cssandjs/specific.css}"/>
+    <!--    <link rel="stylesheet" type="text/css"-->
+    <!--    <link rel="stylesheet" type="text/css"-->
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico" th:href="@{/images/favicon.ico}"/>
+    <script type="text/javascript" th:src="@{/cssandjs/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/cssandjs/bootstrap/bootstrap.bundle.min.js}"></script>
+</head>
+
+<body>
+<!--/*  Multiple fragments may be defined in one file */-->
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid"> <!-- adjusted -->
+            <div class="navbar" id="navbarNav">
+                <a class="nav navbar navbar-brand" href="#">
+                    <img th:src="@{/images/qasino/qasino-logo.png}" alt="Logo" width="90" height="70"
+                         class="d-inline-block align-text-top">
+                </a>
+<!--                <ul class="navbar-nav me-auto mb-2 mb-lg-0"-->
+                <ul class="nav navbar-nav navbar-left"
+                    th:if="${qasino != null && qasino.navBarItems != null}">
+
+                    <li class="nav-item" th:classappend="${module == '/home' ? 'active' : ''}">
+                        <a class="nav-link active" aria-current="page" href="#" th:href="@{/}" th:text="Home"></a>
+                    </li>
+
+                    <li class="nav-item" th:if="${qasino.params.suppliedVisitorId} != null">
+                        <a class="nav-link active" th:href="@{/visitor}"
+                           th:text="${qasino.navBarItems.^[sequence==1].title}">Visitor[]</a>
+                    </li>
+                    <li class="nav-item" th:if="${qasino.params.suppliedVisitorId} == null">
+                        <a class="nav-link disable"
+                           th:text="${qasino.navBarItems.^[sequence==1].title}">Visitor</a>
+                    </li>
+
+                    <li class="nav-item" th:if="${qasino.params.suppliedGameId != null && qasino.params.suppliedGameId >= 0}">
+                        <a class="nav-link active" th:href="@{/setup/{path}(path=${qasino.params.suppliedGameId})}"
+                           th:text="${qasino.navBarItems.^[sequence==2].title}">Setup[]</a>
+                    </li>
+                    <li class="nav-item" th:if="${qasino.params.suppliedGameId == null || qasino.params.suppliedGameId < 0}">
+                        <a class="nav-link disable"
+                           th:text="${qasino.navBarItems.^[sequence==2].title}">Setup</a>
+                    </li>
+
+                    <li class="nav-item" th:if="${qasino.params.suppliedGameId != null && qasino.params.suppliedGameId > 0}">
+                        <a class="nav-link active" th:href="@{/play/{path}(path=${qasino.params.suppliedGameId})}"
+                           th:text="${qasino.navBarItems.^[sequence==3].title}">Play[]</a>
+                    </li>
+                    <li class="nav-item" th:if="${qasino.params.suppliedGameId == null || qasino.params.suppliedGameId < 1}">
+                        <a class="nav-link disable"
+                           th:text="${qasino.navBarItems.^[sequence==3].title}">Play</a>
+                    </li>
+
+                    <li class="nav-item" th:if="${qasino.invitations != null}">
+                        <a class="nav-link active" th:href="@{/invites}"
+                           th:text="${qasino.navBarItems.^[sequence==4].title}">Invite[]</a>
+                    </li>
+                    <li class="nav-item" th:if="${qasino.invitations == null}">
+                        <a class="nav-link disable"
+                           th:text="${qasino.navBarItems.^[sequence==4].title}">Invite</a>
+                    </li>
+
+                    <li class="nav-item" th:if="${qasino.params.suppliedLeagueId != null && qasino.params.suppliedLeagueId > 0}">
+                        <a class="nav-link active" th:href="@{/league/{path}(path=${qasino.params.suppliedLeagueId})}"
+                           th:text="${qasino.navBarItems.^[sequence==5].title}">League[]</a>
+                    </li>
+                    <li class="nav-item" th:if="${qasino.params.suppliedLeagueId == null || qasino.params.suppliedLeagueId < 1}">
+                        <a class="nav-link disable"
+                           th:text="${qasino.navBarItems.^[sequence==5].title}">League</a>
+                    </li>
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" href="/signin" th:href="@{/signin}">Sign in</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" href="/logout" th:href="@{/logout}">Logout</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/visitor}" sec:authentication="name">[]</a>
+                    </li>
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

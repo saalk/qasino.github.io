@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Qasino in the Cloud</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:fragment="selected-game">
+    <form class="form-narrow form-horizontal" method="post"
+          th:object="${qasino}"
+          th:fragment="Qasino">
+        <!--/* Show general error message when form contains errors */-->
+        <th:block th:if="${#fields.hasErrors('${qasino.*}')}">
+            <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">
+                Alert
+            </div>
+        </th:block>
+        <fieldset>
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('${qasino.creation.suppliedType}')}? 'has-error'">
+                <label for="type" class="col-lg-2 control-label">Game</label>
+                <div class="col-lg-10">
+                    <input disabled type="text" class="form-control" id="type" placeholder="Type"
+                           th:field="${qasino.creation.suppliedType}"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('${qasino.creation.suppliedType}')}"
+                          th:errors="${qasino.creation.suppliedType}">Incorrect Type</span>
+                </div>
+            </div>
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('${qasino.game.state}')}? 'has-error'">
+                <label for="state" class="col-lg-2 control-label">State</label>
+                <div class="col-lg-10">
+                    <input disabled type="text" class="form-control" id="state"
+                           placeholder="State"
+                           th:field="${qasino.game.state}"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('${qasino.game.state}')}"
+                          th:errors="${qasino.creation.suppliedState}">Incorrect state</span>
+                </div>
+            </div>
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('${qasino.game.style}')}? 'has-error'">
+                <label for="style2" class="col-lg-2 control-label">Style</label>
+                <div class="col-lg-10">
+                    <input disabled type="text" class="form-control" id="style2" placeholder="Style"
+                           th:field="${qasino.game.style}"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('${qasino.game.style}')}"
+                          th:errors="${qasino.game.style}">Incorrect style</span>
+                </div>
+            </div>
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('${qasino.game.ante}')}? 'has-error'">
+                <label for="ante" class="col-lg-2 control-label">Ante</label>
+                <div class="col-lg-10">
+                    <input disabled type="text" class="form-control" id="ante" placeholder="Ante"
+                           th:field="${qasino.game.ante}"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('${qasino.game.ante}')}"
+                          th:errors="${qasino.game.ante}">Incorrect ante</span>
+                </div>
+            </div>
+            <!--            <div class="form-group"-->
+            <!--                 th:classappend="${#fields.hasErrors('${qasino.creation.table.possibleMoves}')}? 'has-error'">-->
+            <!--                <label for="possibleMoves" class="col-lg-2 control-label">Select a move</label>-->
+            <!--                <div class="col-lg-10">-->
+            <!--                    <input type="text" class="form-control" id="possibleMoves" placeholder="PossibleMoves"-->
+            <!--                           th:field="${qasino.creation.table.possibleMoves}"/>-->
+            <!--                    <span class="help-block"-->
+            <!--                          th:if="${#fields.hasErrors('${qasino.creation.table.possibleMoves}')}"-->
+            <!--                          th:errors="${qasino.creation.table.possibleMoves}">Incorrect possibleMove</span>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <input type="hidden" id="gameId" th:field="${qasino.params.suppliedGameId}"/>
+            <div th:replace="~{forms/play :: btn-moves-row}"></div>
+        </fieldset>
+    </form>
+</div>
+<div th:fragment="seats-table">
+    <table class="u-full-width">
+        <thead>
+        <tr>
+            <th>Seat</th>
+            <th>Playing?</th>
+            <th>Avatar name</th>
+            <th>AiLevel</th>
+            <th>Start fiches</th>
+            <th>Fiches</th>
+            <th>Hand</th>
+        </tr>
+        </thead>
+        <div th:if="${qasino.playing} != null">
+            <tbody>
+            <!--    <tr th:if="${qasino.creation.table.seats.empty}">-->
+            <!--        <td colspan="2"> No Seats Available</td>-->
+            <!--    </tr>-->
+            <!-- #lists is SPEL -->
+
+            <tr th:unless="${#lists.isEmpty(qasino.playing.seats)}"
+                th:each="seat : ${qasino.playing.seats}">
+                <td><span th:text="${seat.seatId}">Seat</span></td>
+                <td><span th:text="${seat.isSeatPlaying}">Playing?</span></td>
+                <td><span th:text="${seat.avatarName}">Avatar name</span></td>
+                <td><span th:text="${seat.aiLevel}">AiLevel</span></td>
+                <td><span th:text="${seat.seatStartBalance}">Start</span></td>
+                <td><span th:text="${seat.fiches}">Fiches</span></td>
+                <td><span th:text="${seat.cardsInHand}">Hand</span></td>
+            </tr>
+            </tbody>
+        </div>
+    </table>
+</div>
+<div th:fragment="results-table">
+    <fieldset>
+        <!--        <div class="form-group">Result-->
+        <!--        </div>-->
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Result</label>
+        </div>
+        <table class="u-full-width">
+            <thead>
+            <tr>
+                <th>Seat</th>
+                <th>Winner?</th>
+                <th>Avatar</th>
+                <th>AiLevel</th>
+                <th>Fiches Won</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--    <tr th:if="${qasino.creation.table.seats.empty}">-->
+            <!--        <td colspan="2"> No Seats Available</td>-->
+            <!--    </tr>-->
+            <!-- #lists is SPEL -->
+            <tr th:unless="${#lists.isEmpty(qasino.results)}"
+                th:each="result : ${qasino.results}">
+                <td><span th:text="${result.seatId}">Seat</span></td>
+                <td><span th:text="${result.winner}">Winner?</span></td>
+                <td><span th:text="${result.avatarName}">Avatar</span></td>
+                <td><span th:text="${result.aiLevel}">AiLevel</span></td>
+                <td><span th:text="${result.fichesWon}">Fiches Won</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</div>
+<div th:fragment="btn-moves-row">
+    <table class="u-full-width">
+        <thead>
+        <tr>
+            <th class="no-line">Possible moves</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${qasino.params.possibleNextPlayEvents == null} or ${qasino.params.possibleNextPlayEvents.empty}">
+            <td class="no-line" colspan="2">No moves available...</td>
+        </tr>
+        <tr>
+            <td class="no-line"
+                th:unless="${#lists.isEmpty(qasino.params.possibleNextPlayEvents)}"
+                th:each="play : ${qasino.params.possibleNextPlayEvents}">
+                <!--                <div class="form-group col-lg-10">-->
+                <div class="col-lg-10">
+                    <button th:text="${play}"
+                            th:formaction="@{/play/{playEvent}/{gameId}(playEvent=${play}, gameId=${qasino.params.suppliedGameId})}"
+                            type="submit" class="btn btn-default">Button
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:fragment="seats-form">
+    <form class="form-narrow form-horizontal" method="post"
+          th:object="${qasino}"
+          th:fragment="Qasino"
+          th:action="@{/stop/{path}(path=${qasino.params.suppliedGameId})}">
+        <!--/* Show general error message when form contains errors */-->
+        <th:block th:if="${#fields.hasErrors('${qasino.*}')}">
+            <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">
+                Alert
+            </div>
+        </th:block>
+        <fieldset>
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('${qasino.game.cardsInStock}')}? 'has-error'">
+                <label for="deck" th:text="${'Deck - values A(1),2-10,JQK'}"
+                       class="col-lg-2 control-label">Placeholder</label>
+                <div class="col-lg-21">
+                    <input readonly type="text" class="form-control" id="deck" placeholder="Deck"
+                           th:field="${qasino.game.cardsInStock}"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('${qasino.game.cardsInStock}')}"
+                          th:errors="${qasino.game.cardsInStock}">Incorrect deck</span>
+                </div>
+                <div th:replace="~{forms/play :: seats-table}"></div>
+                <!--                <input type="hidden" id="gameid2"-->
+                <!--                       th:field="${qasino.params.suppliedGameId}"/>-->
+                <div class="form-group"
+                     th:if="${qasino.params.suppliedGameId} > 0 and ${qasino.params.suppliedGameStateGroup} != 'FINISHED'">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" class="btn btn-default">Quit</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+@startuml src/main/resources/plantuml/Casino.png
+		skinparam classAttributeIconSize 0
+		package "cloud.qasino.card" {
+		package "entity" {
+
+class Visitor {
+- visitorId : int
+- created : String
+..
+- visitorName : String
+- email : String
+- balance : int
+- pawn : int
+-- PREPARE --
++ pawnShip()
+-- MAIN --
++ repayLoan()
+}
+Visitor "1" -right- "n" Player: has played
+
+class Player {
+- playerId : int
+- created : String
+..
+- (MoreToOne) visitorId : Visitor
+- (MoreToOne) gameId : Game
+..
+- avatar : String
+- human : boolean
+- aiLevel : AiLevel
+- playingOrder : int
+- balance : int
+-- CRUD --
+}
+Player -right- AiLevel : intelligence
+Player "n" -down- "1" Game : plays
+
+enum AiLevel {
+DUMB
+NORMAL
+SMART
+..
+HUMAN
+}
+
+class Game {
++ cardGameId : int
+- created : String
+..
+- (OneToOne) winner: Player
+..
+- type : Type
+- style : Style
+- state : GameState
+- ante: int
+-- PREPARE --
++ setPlayingOrder(in: boolean humanFirst)
++ shuffleDeck(in: #jokers, out: deck)
+-- MAIN --
++ layoutOnTable(out: playingCards on table)
++ getAllHands(out: playingCards per hand)
+}
+
+Game -left- Type : Card
+Game -down- Style : style
+Game "1" -right- "n" Card : deck
+
+enum Type {
+HIGHLOW
+BLACKJACK
+}
+
+enum Style {
+	anteToWin: enum
+	bettingStrategy : enum
+	numOfDeck : enum
+	insuranceCost : enum
+	roundsToWin : enum
+	maxMoves : enum
+}
+
+class Card {
+- CardId : in
+- Card : [2H/KD/10C/..]
+- created : String
+..
+- (MoreToOne) gameId : Game
+- (MoreToOne) hand : Player
+..
+- face: [DOWN/UP]
+- location : Location
+- position: [ORDERED/SHUFFLED/..]
+- sequence : int
+-- PREPARE --
+- calculateValue(in:Type)
+}
+Card -down- Location
+Card "0..n" -up- "0..1" Player : in hand
+
+enum Location {
+PACK
+STOCK
+STACK
+HAND
+WASTEPILE
+}
+
+
+package "gameEngine" {
+class PlayingCard {
+- playingCardId: String
+..
+- rank : [A/2-10/J/Q/H /R]
+- suit : [C/D/H/S /J]
+- value : int
+- thumbnailPath : String
+--
+}
+
+class CardMove {
+- cardMoveId : int
+- created : String
+..
+- (MoreToOne) cardId : Card
+- (MoreToOne) playerId : Player
+- (OneToOne) turnId : Turn
+.. json..
+- move : Move
+- roundNumber : int
+- moveNumber : int
+- bet : int
+-- PREPARE --
+- validateAction(in: CardEvent)
+-- MAIN --
++ processAction(in/out: CardEvent)
+-- FINISH --
+- updatePlayingCards()
+- calculatePlayerBalance()
++ determineNextAction
+(out: Player, Moves, GameState)
+}
+CardMove -up- Move : move
+CardMove "1..1" -down- "1..1" Turn : turnId
+
+class Turn {
+- turnId : long
+- updated : String
+..
+- (OneToOen) gameId : Game
+- (OneToOne) cardMoveId : CardMove
+..
+activePlayerId : long
+currentRoundNumber : int
+currentMoveNumber : int
+--
+(out: CardMove, Game)
+}
+
+enum Move {
+.. Generic
+DEAL
+PASS
+NEXT
+HIGHER
+LOWER
+}
+}
+@enduml
