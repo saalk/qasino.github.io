@@ -1,5 +1,6 @@
 package cloud.qasino.games.database.security;
 
+import jakarta.persistence.FetchType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,20 +17,20 @@ import java.util.Collection;
 @Getter
 @Setter
 @Entity
-@Table(name = "privilege", indexes =
-        {@Index(name = "privilege_index", columnList = "privilege_id", unique = true)
+@Table(name = "PRIVILEGE", indexes =
+        {@Index(name = "PRIVILEGE_INDEX", columnList = "PRIVILEGE_ID", unique = true)
         })
 public class Privilege {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "privilege_id", nullable = false)
+    @Column(name = "PRIVILEGE_ID", nullable = false)
     private Long privilegeId;
 
-    @Column(name = "name", length = 25)
+    @Column(name = "NAME", length = 25)
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
+    @ManyToMany(mappedBy = "privileges", fetch = FetchType.EAGER)
     private Collection<Role> roles;
 
     public Privilege() {

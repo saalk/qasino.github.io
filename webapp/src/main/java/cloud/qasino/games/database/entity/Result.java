@@ -63,10 +63,10 @@ public class Result {
     @Enumerated(EnumType.STRING)
     @Column(name = "type", length = 50, nullable = false)
     private Type type;
-    @Column(name = "year", length = 4)
-    private int year;
-    @Column(name = "month", length = 20)
-    private Month month;
+    @Column(name = "JAAR", length = 4)
+    private int jaar;
+    @Column(name = "maand", length = 20)
+    private Month maand;
     @Column(name = "week", length = 3)
     private String week;
     @Column(name = "weekday", length = 2)
@@ -86,8 +86,8 @@ public class Result {
         DateTimeFormatter week = DateTimeFormatter.ofPattern("w");
         String result = localDateAndTime.format(formatter);
         this.created = result.substring(0, 20);
-        this.year = localDateAndTime.getYear();
-        this.month = localDateAndTime.getMonth();
+        this.jaar = localDateAndTime.getYear();
+        this.maand = localDateAndTime.getMonth();
         this.week = localDateAndTime.format(week);
         this.weekday = localDateAndTime.getDayOfMonth();
     }

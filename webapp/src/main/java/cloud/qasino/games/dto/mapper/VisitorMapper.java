@@ -4,6 +4,7 @@ import cloud.qasino.games.database.security.Role;
 import cloud.qasino.games.database.security.Visitor;
 import cloud.qasino.games.dto.model.RoleDto;
 import cloud.qasino.games.dto.model.VisitorDto;
+import org.hibernate.Hibernate;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -24,7 +25,7 @@ public interface VisitorMapper {
 //    @Mapping(target = "invitedGamesForVisitor", ignore = true)
     @Mapping(target = "admin", source = "visitor", qualifiedByName = "isTheAdmin")
     @Mapping(target = "user", source = "visitor", qualifiedByName = "isTheUser")
-    @Mapping(target = "repayPossible", source = "visitor", qualifiedByName = "canRepay")
+    @Mapping(target = "repayPossible", source = "visitor", qualifiedByName = "repayPossible")
     @Mapping(target = "rolesList", source = "visitor", qualifiedByName = "rolesList")
     @Mapping(target = "roles", source = "visitor", qualifiedByName = "roles")
     VisitorDto toDto(Visitor visitor);
@@ -35,8 +36,8 @@ public interface VisitorMapper {
     @Mapping(target = "aliasSequence", ignore = true)
     @Mapping(target = "balance", ignore = true)
     @Mapping(target = "securedLoan", ignore = true)
-    @Mapping(target = "year", ignore = true)
-    @Mapping(target = "month", ignore = true)
+    @Mapping(target = "jaar", ignore = true)
+    @Mapping(target = "maand", ignore = true)
     @Mapping(target = "week", ignore = true)
     @Mapping(target = "weekday", ignore = true)
     @Mapping(target = "players", ignore = true)
@@ -45,8 +46,8 @@ public interface VisitorMapper {
     @Mapping(target = "password", ignore = true)
     Visitor fromDto(VisitorDto visitor);
 
-    @Named("canRepay")
-    default boolean canRepay(Visitor visitor){
+    @Named("repayPossible")
+    default boolean repayPossible(Visitor visitor){
         return visitor.getBalance() >= visitor.getSecuredLoan();
     }
     @Named("isTheAdmin")

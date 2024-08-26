@@ -12,7 +12,7 @@ import java.util.List;
 public interface CardMoveRepository extends JpaRepository<CardMove, Long> {
 
     // finds
-    @Query(value = "SELECT * FROM \"cardmove\" where \"playing_id\" = :playingId ORDER BY \"sequence\" ASC ", nativeQuery = true)
+    @Query(value = "SELECT * FROM CARDMOVE where PLAYING_ID = :playingId ORDER BY SEQUENCE ASC ", nativeQuery = true)
     List<CardMove> findByPlayingIdOrderBySequenceAsc(long playingId);
     List<CardMove> findByPlayingOrderBySequenceAsc(Playing playing);
     List<CardMove> findByPlayerIdOrderBySequenceAsc(long playerId);

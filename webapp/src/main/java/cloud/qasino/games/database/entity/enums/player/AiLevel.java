@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 public enum AiLevel implements LabeledEnum {
 
-    @Column(name = "aiLevel", length = 10, nullable = false)
+    @Column(name = "AI_LEVEL", length = 10, nullable = false)
     DUMB("dumb"), AVERAGE("average"), SMART("smart"), HUMAN("human"), ERROR("error");
     
     /**

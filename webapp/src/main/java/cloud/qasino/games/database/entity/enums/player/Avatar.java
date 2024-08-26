@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 public enum Avatar implements LabeledEnum {
 
-    @Column(name = "avatar", length = 25)
+    @Column(name = "AVATAR", length = 25)
 
     ELF("elf", "coin for no insurance"),
     MAGICIAN("magician", "six wins the game"),

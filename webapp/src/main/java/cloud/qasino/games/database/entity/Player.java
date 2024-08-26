@@ -25,68 +25,68 @@ import java.util.Objects;
 // @Data for JPA entities is an antipattern
 // But we override equals, hash and toString and have noargs constructor.
 @Data
-@JsonIdentityInfo(generator = JSOGGenerator.class, property = "playerId")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "player", indexes = {
+//@JsonIdentityInfo(generator = JSOGGenerator.class, property = "playerId")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "PLAYER", indexes = {
         // not needed : @Index(name = "players_index", columnList = "player_id", unique = true)
 })
 public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "player_id", nullable = false)
+    @Column(name = "PLAYER_ID", nullable = false)
     private long playerId;
 
-    @Column(name = "created", length = 25)
+    @Column(name = "CREATED", length = 25)
     private String created;
 
     // Foreign keys
     // UsPl: a Visitor can play many Games as a Player
     // However AI players are no visitors!
     @ManyToOne
-    @JoinColumn(name = "visitor_id", referencedColumnName = "visitor_id", foreignKey = @ForeignKey
-            (name = "fk_visitor_id"), nullable = true)
+    @JoinColumn(name = "VISITOR_ID", referencedColumnName = "VISITOR_ID", foreignKey = @ForeignKey
+            (name = "FK_VISITOR_ID"), nullable = true)
     private Visitor visitor;
 
     // PlGa: many Players can play the same Game
     @ManyToOne
-    @JoinColumn(name = "game_id", referencedColumnName = "game_id", foreignKey = @ForeignKey
-            (name = "fk_game_id"), nullable = true)
+    @JoinColumn(name = "GAME_ID", referencedColumnName = "GAME_ID", foreignKey = @ForeignKey
+            (name = "FK_GAME_ID"), nullable = true)
     private Game game;
 
     // Normal fields
 
     // current sequence of the player in the game, zero is a DECLINED VISITOR
-    @Column(name = "seat")
+    @Column(name = "SEAT")
     private int seat;
 
     @Setter(AccessLevel.NONE)
-    @Column(name = "is_human")
+    @Column(name = "IS_HUMAN")
     private boolean human;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false, length = 20)
+    @Column(name = "ROLE", nullable = false, length = 20)
     private PlayerType playerType;
 
-    @Column(name = "startFiches")
+    @Column(name = "startfiches")
     private int startFiches;
 
-    @Column(name = "fiches")
+    @Column(name = "FICHES")
     private int fiches;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "avatar", nullable = true, length = 50)
+    @Column(name = "AVATAR", nullable = true, length = 50)
     private Avatar avatar;
 
-    @Column(name = "avatar_name", nullable = true, length = 50)
+    @Column(name = "AVATAR_NAME", nullable = true, length = 50)
     private String avatarName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "ai_level", nullable = true, length = 50)
+    @Column(name = "AI_LEVEL", nullable = true, length = 50)
     private AiLevel aiLevel;
 
     @Setter(AccessLevel.NONE)
-    @Column(name = "is_winner")
+    @Column(name = "IS_WINNER")
     private boolean winner;
 
     // REFERENCES

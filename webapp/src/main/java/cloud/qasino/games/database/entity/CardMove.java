@@ -34,9 +34,9 @@ import java.util.Objects;
 // @Data for JPA entities is an antipattern
 // But we override equals, hash and toString and have noargs constructor.
 @Data
-@JsonIdentityInfo(generator = JSOGGenerator.class, property = "cardMoveId")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "cardmove", indexes = {
+//@JsonIdentityInfo(generator = JSOGGenerator.class, property = "CARDMOVE_ID")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "CARDMOVE", indexes = {
 //        @Index(name = "cardmove_playing_index", columnList = "playing_id", unique = false),
                 // not needed : @Index(name = "cardmove_index", columnList = "cardmove_id", unique = true)
         }
@@ -46,44 +46,44 @@ public class CardMove {
     // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cardmove_id", nullable = false)
+    @Column(name = "CARDMOVE_ID", nullable = false)
     private long cardMoveId;
     @JsonIgnore
-    @Column(name = "created", length = 25)
+    @Column(name = "CREATED", length = 25)
     private String created;
 
     // Foreign keys
     @JsonIgnore
     // many [CardMove] are part of one [Playing]
     @ManyToOne
-    @JoinColumn(name = "playing_id", referencedColumnName = "playing_id", foreignKey = @ForeignKey
-            (name = "fk_playing_id"), nullable = false)
+    @JoinColumn(name = "PLAYING_ID", referencedColumnName = "PLAYING_ID", foreignKey = @ForeignKey
+            (name = "FK_PLAYING_ID"), nullable = false)
     private Playing playing;
     // one [CardMove] can be part of one [Player]
-    @Column(name = "player_id")
+    @Column(name = "PLAYER_ID")
     private long playerId;
     // TODO move cards can be in one move in future
     // one [CardMove] can be part of one [Card]
-    @Column(name = "card_id", nullable = true)
+    @Column(name = "CARD_ID", nullable = true)
     private long cardId;
 
     // Normal fields
     @Enumerated(EnumType.STRING)
-    @Column(name = "move", nullable = false)
+    @Column(name = "MOVE", nullable = false)
     private Move move;
-    @Column(name = "cardMove_details", nullable = true)
+    @Column(name = "cardmove_details", nullable = true)
     private String cardMoveDetails;
     @Setter(AccessLevel.NONE)
-    @Column(name = "sequence")
+    @Column(name = "SEQUENCE")
     private String sequence;
     @Enumerated(EnumType.STRING)
-    @Column(name = "location", nullable = true)
+    @Column(name = "LOCATION", nullable = true)
     private Location location;
-    @Column(name = "bet", nullable = true)
+    @Column(name = "BET", nullable = true)
     private int bet;
-    @Column(name = "start_fiches", nullable = true)
+    @Column(name = "START_FICHES", nullable = true)
     private int startFiches;
-    @Column(name = "end_fiches", nullable = true)
+    @Column(name = "END_FICHES", nullable = true)
     private int endFiches;
 
     // References - the actual FK are in other tables

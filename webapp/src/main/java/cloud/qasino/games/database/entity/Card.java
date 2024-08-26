@@ -20,10 +20,10 @@ import java.util.Objects;
 // @Data for JPA entities is an antipattern
 // But we override equals, hash and toString and have noargs constructor.
 @Data
-@JsonIdentityInfo(generator = JSOGGenerator.class, property = "cardId")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "card", indexes =
-        { @Index(name = "cards_game_index", columnList = "game_id", unique = false ),
+//@JsonIdentityInfo(generator = JSOGGenerator.class, property = "cardId")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "CARD", indexes =
+        { @Index(name = "CARDS_GAME_INDEX", columnList = "GAME_ID", unique = false ),
           // not needed : @Index(name = "cards_index", columnList = "card_id", unique = true )
         })
 public class Card {
@@ -31,40 +31,40 @@ public class Card {
     // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "card_id")
+    @Column(name = "CARD_ID")
     private long cardId;
     @JsonIgnore
-    @Column(name = "created", length = 25)
+    @Column(name = "CREATED", length = 25)
     private String created;
-    @Column(name = "rankSuit", length = 3, nullable = false)
+    @Column(name = "RANKSUIT", length = 3, nullable = false)
     private String rankSuit;
 
     // Foreign keys
     @JsonIgnore
     // many [Card] can be part of one [Game]
     @ManyToOne
-    @JoinColumn(name = "game_id", referencedColumnName = "game_id", foreignKey =
+    @JoinColumn(name = "GAME_ID", referencedColumnName = "GAME_ID", foreignKey =
     @ForeignKey(name =
-            "fk_game_id"), nullable=false)
+            "FK_GAME_ID"), nullable=false)
     private Game game;
     @JsonIgnore
     // one [Card] can be part of one [Player] or none
     @OneToOne
-    @JoinColumn(name = "player_id", referencedColumnName = "player_id", foreignKey =
-    @ForeignKey(name ="fk_player_id"))
+    @JoinColumn(name = "PLAYER_ID", referencedColumnName = "PLAYER_ID", foreignKey =
+    @ForeignKey(name ="FK_PLAYER_ID"))
     private Player hand;
 
     // Normal fields
-    @Column(name = "sequence")
+    @Column(name = "SEQUENCE")
     private int sequence;
     @Enumerated(EnumType.STRING)
-    @Column(name = "location", nullable = false)
+    @Column(name = "LOCATION", nullable = false)
     private Location location;
     @Enumerated(EnumType.STRING)
-    @Column(name = "position", nullable = false)
+    @Column(name = "POSITION", nullable = false)
     private Position position;
     @Enumerated(EnumType.STRING)
-    @Column(name = "face", nullable = false)
+    @Column(name = "FACE", nullable = false)
     private Face face;
 
     // References - actual FK are in other tables

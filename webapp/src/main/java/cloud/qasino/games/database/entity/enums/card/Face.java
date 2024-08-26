@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 public enum Face implements LabeledEnum {
 
-	@Column(name = "location", length = 25, nullable = false)
+	@Column(name = "LOCATION", length = 25, nullable = false)
 	UP("up"), DOWN("down"), ERROR("error");
 
 	/**

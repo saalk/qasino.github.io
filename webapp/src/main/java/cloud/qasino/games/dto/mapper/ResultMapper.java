@@ -49,8 +49,8 @@ public interface ResultMapper {
     @Mapping(target = "game", ignore = true)
     @Mapping(target = "type", ignore = true)
     @Mapping(target = "created", ignore = true)
-    @Mapping(target = "year", ignore = true)
-    @Mapping(target = "month", ignore = true)
+    @Mapping(target = "jaar", ignore = true)
+    @Mapping(target = "maand", ignore = true)
     @Mapping(target = "week", ignore = true)
     @Mapping(target = "weekday", ignore = true)
     Result fromDto(ResultDto result);

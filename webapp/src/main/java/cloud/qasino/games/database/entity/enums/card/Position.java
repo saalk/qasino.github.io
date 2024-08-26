@@ -15,7 +15,7 @@ import java.util.Set;
 public enum Position implements LabeledEnum {
 
     // TODO ordered make sequential, what is manual ??
-    @Column(name = "location", length = 25, nullable = false)
+    @Column(name = "LOCATION", length = 25, nullable = false)
     SHUFFLED("shuffled"), ORDERED("ordered"), MANUAL("manual"), ERROR("error");
 
     public static final Map<String, Position> lookup = new HashMap<>();

@@ -45,8 +45,8 @@ public class VisitorDto {
     private int securedLoan;
 
 
-    private int year;
-    private Month month;
+    private int jaar;
+    private Month maand;
     private String week;
     private int weekday;
 

@@ -27,7 +27,7 @@ import java.util.Random;
 @NoArgsConstructor
 public enum Suit implements LabeledEnum {
 
-    @Column(name = "suit", length = 10, nullable = false)
+    @Column(name = "SUIT", length = 10, nullable = false)
     CLUBS("C"),
     DIAMONDS("D"),
     HEARTS("H"),

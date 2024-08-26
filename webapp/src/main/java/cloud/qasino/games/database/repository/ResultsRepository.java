@@ -17,15 +17,17 @@ public interface ResultsRepository extends JpaRepository<Result, Long> {
     // @formatter:off
 
     // BASIC FINDS
-    @Query(value = "SELECT * FROM \"result\" ORDER BY \"result_id\"", countQuery = "SELECT count(*) FROM \"result\"", nativeQuery = true)
+    @Query(value = "SELECT * FROM RESULT ORDER BY RESULT_ID", countQuery = "SELECT count(*) FROM RESULT", nativeQuery = true)
     Page<Result> findAllResultsWithPage(Pageable pageable);
     List<Result> findByGame(Game game);
-    @Query(value = "SELECT * FROM \"result\" where \"game_id\" = :gameId ", nativeQuery = true)
+    @Query(value = "SELECT * FROM RESULT where game_id = :gameId ", nativeQuery = true)
     List<Result> findByGameId(Long gameId);
 
     // SPECIAL FINDS
-    public final static String FIND_ACTIVE_RESULT_BY_LEAGUE_ID  =        "SELECT r.* FROM \"result\" as r JOIN \"league\" as l JOIN \"game\" as g WHERE r.\"game_id\" = g.\"game_id\" AND l.\"league_id\" = g.\"league_id\" AND l.\"league_id\" = :leagueId ";
-    public final static String COUNT_ACTIVE_RESULT_BY_LEAGUE_ID = "SELECT count(*) FROM \"result\" as r JOIN \"league\" as l JOIN \"game\" as g WHERE r.\"game_id\" = g.\"game_id\" AND l.\"league_id\" = g.\"league_id\" AND l.\"league_id\" = :leagueId ";
+    public final static String FIND_ACTIVE_RESULT_BY_LEAGUE_ID  =        
+            "SELECT r.*      FROM RESULT as r JOIN LEAGUE as l JOIN GAME as g WHERE r.GAME_ID = g.GAME_ID AND l.LEAGUE_ID = g.LEAGUE_ID AND l.LEAGUE_ID = :leagueId ";
+    public final static String COUNT_ACTIVE_RESULT_BY_LEAGUE_ID = 
+            "SELECT count(*) FROM RESULT as r JOIN LEAGUE as l JOIN GAME as g WHERE r.GAME_ID = g.GAME_ID AND l.LEAGUE_ID = g.LEAGUE_ID AND l.LEAGUE_ID = :leagueId ";
     @Query(value = FIND_ACTIVE_RESULT_BY_LEAGUE_ID, countQuery = COUNT_ACTIVE_RESULT_BY_LEAGUE_ID, nativeQuery = true)
     public List<Result> findAllResultForLeagueWithPage(@Param("leagueId") long leagueId, Pageable pageable);
 

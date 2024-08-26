@@ -40,9 +40,9 @@ import java.util.Objects;
 // @Data for JPA entities is an antipattern
 // But we override equals, hash and toString and have noargs constructor.
 @Data
-@JsonIdentityInfo(generator = JSOGGenerator.class, property = "gameId")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "game", indexes = {
+//@JsonIdentityInfo(generator = JSOGGenerator.class, property = "gameId")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "GAME", indexes = {
 //        { @Index(name = "games_initiator_index", columnList = "visitor_id", unique = false ),
         // not needed : @Index(name = "games_index", columnList = "game_id", unique = true)
 })
@@ -51,26 +51,26 @@ public class Game {
     // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "game_id", nullable = false)
+    @Column(name = "GAME_ID", nullable = false)
     private long gameId;
     @JsonIgnore
-    @Column(name = "updated", length = 25, nullable = false)
+    @Column(name = "UPDATED", length = 25, nullable = false)
     private String updated;
 
     // Foreign keys
     @JsonIgnore
     // many [Game] can be part of one [League]
     @ManyToOne
-    @JoinColumn(name = "league_id", referencedColumnName = "league_id", foreignKey = @ForeignKey
-            (name = "fk_league_id"), nullable = true)
+    @JoinColumn(name = "LEAGUE_ID", referencedColumnName = "LEAGUE_ID", foreignKey = @ForeignKey
+            (name = "FK_LEAGUE_ID"), nullable = true)
     private League league;
     // one [Game] can be part of one [Visitor]
-    @Column(name = "initiator")
+    @Column(name = "INITIATOR")
     private long initiator; // visitorId
 
     // Normal fields
     @Enumerated(EnumType.STRING)
-    @Column(name = "state", length = 50, nullable = false)
+    @Column(name = "STATE", length = 50, nullable = false)
     @Setter(AccessLevel.NONE)
     private GameState state;
     public void setState(GameState state) {
@@ -79,28 +79,28 @@ public class Game {
         setUpdated();
     }
     @Enumerated(EnumType.STRING)
-    @Column(name = "previous_state", length = 50, nullable = true)
+    @Column(name = "PREVIOUS_STATE", length = 50, nullable = true)
     private GameState previousState;
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", length = 50, nullable = false)
+    @Column(name = "TYPE", length = 50, nullable = false)
     private Type type;
-    @Column(name = "style", length = 10, nullable = true)
+    @Column(name = "STYLE", length = 10, nullable = true)
     private String style;
-    @Column(name = "ante")
+    @Column(name = "ANTE")
     private int ante;
 
     // Derived fields
     @Setter(AccessLevel.NONE)
-    @Column(name = "year", length = 4)
-    private int year;
+    @Column(name = "JAAR", length = 4)
+    private int jaar;
     @Setter(AccessLevel.NONE)
-    @Column(name = "month", length = 20)
-    private Month month;
+    @Column(name = "MAAND", length = 20)
+    private Month maand;
     @Setter(AccessLevel.NONE)
-    @Column(name = "week", length = 3)
+    @Column(name = "WEEK", length = 3)
     private String week;
     @Setter(AccessLevel.NONE)
-    @Column(name = "weekday", length = 2)
+    @Column(name = "WEEKDAY", length = 2)
     private int weekday;
 
     /*
@@ -249,8 +249,8 @@ public class Game {
         String result = localDateAndTime.format(formatter);
         this.updated = result.substring(0, 20);
 
-        this.year = localDateAndTime.getYear();
-        this.month = localDateAndTime.getMonth();
+        this.jaar = localDateAndTime.getYear();
+        this.maand = localDateAndTime.getMonth();
         DateTimeFormatter week = DateTimeFormatter.ofPattern("w");
         this.week = localDateAndTime.format(week);
         this.weekday = localDateAndTime.getDayOfMonth();

@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 public enum PlayerType implements LabeledEnum {
 
-    @Column(name = "role", length = 25)
+    @Column(name = "ROLE", length = 25)
     INITIATOR("initiator"),
     INVITED("invited"),
     INVITEE("invitee"),

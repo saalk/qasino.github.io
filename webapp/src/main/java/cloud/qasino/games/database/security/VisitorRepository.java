@@ -19,12 +19,12 @@ public interface VisitorRepository extends JpaRepository<Visitor, Long> {
 
     // lifecycle of a visitor - aim to not used the dto's
     Visitor findOneByEmail(String email);
-    @Query(value = "SELECT * FROM \"visitor\" u WHERE u.\"username\" = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM VISITOR u WHERE u.USERNAME = ?1", nativeQuery = true)
     Visitor findByUsername(@Param("username") String username);
     Optional<Visitor> findVisitorByVisitorId(Long visitorId);
     Optional<Visitor> findVisitorByAliasAndAliasSequence(String alias, int aliasSequence);
-    @Query(value = "SELECT *        FROM \"visitor\" ORDER BY \"visitor_id\" ",
-      countQuery = "SELECT count(*) FROM \"visitor\" ",
+    @Query(value = "SELECT *        FROM VISITOR ORDER BY VISITOR_ID ",
+      countQuery = "SELECT count(*) FROM VISITOR ",
             nativeQuery = true)
     Page<Visitor> findAllVisitorsWithPage(Pageable pageable);
     void removeUserByUsername(String username);

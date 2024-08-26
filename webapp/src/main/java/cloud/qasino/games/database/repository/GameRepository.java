@@ -22,11 +22,11 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     // @formatter:off
     @Transactional
-    @Query(value = "update \"game\" as g " +
-            "set g.\"ante\"    = :ante, " +
-            "    g.\"style\"   = :style, " +
-            "    g.\"state\"   = :state " +
-            "where g.\"game_id\" = :game_id "
+    @Query(value = "update GAME as g " +
+            "set g.ANTE    = :ante, " +
+            "    g.STYLE   = :style, " +
+            "    g.STATE   = :state " +
+            "where g.GAME_ID = :game_id "
             , nativeQuery = true)
     void update(@Param("ante") int ante, @Param("style") String style, @Param("state") String state, @Param("game_id") long game_id);
 
@@ -37,11 +37,11 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     @Query(value = COUNT_STATES_FOR_INITIATOR, nativeQuery = true)
     Integer countByStatesForInitiator(@Param(value = "states") String[] states, @Param(value = "initiator") long initiator);
     @Query(value = COUNT_TODAY, nativeQuery = true)
-    Integer countByToday(String year, String month, String weekday);
+    Integer countByToday(String jaar, String maand, String weekday);
     @Query(value = COUNT_WEEK, nativeQuery = true)
-    Integer countByThisWeek(String year, String week);
-    @Query(value = COUNT_MONTH, nativeQuery = true)
-    Integer countByThisMonth(String year, String month);
+    Integer countByThisWeek(String jaar, String week);
+    @Query(value = COUNT_MAAND, nativeQuery = true)
+    Integer countByThisMonth(String jaar, String maand);
 
     // special finds
     List<Game> findGamesByLeague(League league);
@@ -85,91 +85,91 @@ public interface GameRepository extends JpaRepository<Game, Long> {
             Pageable pageable);
 
     // prepared queries
-    String FIND_ALL =     "SELECT *        FROM \"game\" ORDER BY \"updated\" DESC";
-    String COUNT_ALL =    "SELECT count(*) FROM \"game\"";
-    String FIND_STATES =  "SELECT *        FROM \"game\" as g WHERE g.\"state\" IN :states";
-    String COUNT_STATES = "SELECT count(*) FROM \"game\" as g WHERE g.\"state\" IN (:states)";
-    String COUNT_STATES_FOR_INITIATOR = "SELECT count(*) FROM \"game\" as g WHERE g.\"state\" IN (:states) AND g.\"initiator\" = :initiator ";
-    String COUNT_TODAY =  "SELECT count(*) FROM \"game\" as g WHERE g.\"year\" = :year AND g.\"month\" = :month AND g.\"weekday\" = :weekday ";
-    String COUNT_WEEK =   "SELECT count(*) FROM \"game\" as g WHERE g.\"year\" = :year AND g.\"week\" = :week ";
-    String COUNT_MONTH =  "SELECT count(*) FROM \"game\" as g WHERE g.\"year\" = :year AND g.\"month\" = :month ";
+    String FIND_ALL =     "SELECT *        FROM GAME ORDER BY UPDATED DESC";
+    String COUNT_ALL =    "SELECT count(*) FROM GAME";
+    String FIND_STATES =  "SELECT *        FROM GAME as g WHERE g.STATE IN :states";
+    String COUNT_STATES = "SELECT count(*) FROM GAME as g WHERE g.STATE IN (:states)";
+    String COUNT_STATES_FOR_INITIATOR = "SELECT count(*) FROM GAME as g WHERE g.STATE IN (:states) AND g.INITIATOR = :initiator ";
+    String COUNT_TODAY =  "SELECT count(*) FROM GAME as g WHERE g.JAAR = :jaar AND g.MAAND = :maand AND g.WEEKDAY = :weekday ";
+    String COUNT_WEEK =   "SELECT count(*) FROM GAME as g WHERE g.JAAR = :jaar AND g.WEEK = :week ";
+    String COUNT_MAAND =  "SELECT count(*) FROM GAME as g WHERE g.JAAR = :jaar AND g.MAAND = :maand ";
 
-    String FIND_ALL_BY_INITIATOR_ID       = "SELECT *        FROM \"game\" as a WHERE a.\"initiator\" = :initiator ORDER BY a.\"updated\" DESC ";
-    String COUNT_ALL_BY_INITIATOR_ID      = "SELECT count(*) FROM \"game\" as a WHERE a.\"initiator\" = :initiator ";
+    String FIND_ALL_BY_INITIATOR_ID       = "SELECT *        FROM GAME as a WHERE a.INITIATOR = :initiator ORDER BY a.UPDATED DESC ";
+    String COUNT_ALL_BY_INITIATOR_ID      = "SELECT count(*) FROM GAME as a WHERE a.INITIATOR = :initiator ";
     String FIND_ALL_INVITED_BY_VISITOR_ID =
-            "SELECT a.*      FROM \"game\" as a " +
-                    "JOIN \"player\" as b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND a.\"initiator\" != :visitorId " +
-                    "ORDER BY a.\"updated\" DESC ";
+            "SELECT a.*      FROM GAME as a " +
+                    "JOIN PLAYER as b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND a.INITIATOR != :visitorId " +
+                    "ORDER BY a.UPDATED DESC ";
     String COUNT_ALL_INVITED_BY_VISITOR_ID =
-            "SELECT count(a.*) FROM \"game\" as a " +
-                    "JOIN \"player\" as b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND a.\"initiator\" != :visitorId ";
+            "SELECT count(a.*) FROM GAME as a " +
+                    "JOIN PLAYER as b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND a.INITIATOR != :visitorId ";
 
     String FIND_ALL_INITIATED_BY_VISITOR_ID =
-            "SELECT * FROM \"game\" WHERE \"initiator\" = :visitorId ORDER BY \"updated\" desc ";
+            "SELECT * FROM GAME WHERE INITIATOR = :visitorId ORDER BY UPDATED desc ";
     String COUNT_ALL_INITIATED_BY_VISITOR_ID =
-            "SELECT count(*) FROM \"game\" WHERE \"initiator\" = :visitorId ";
+            "SELECT count(*) FROM GAME WHERE INITIATOR = :visitorId ";
 
 
     String FIND_ALL_INVITED_FOR_VISITOR_ID =
-            "SELECT b.* FROM \"game\" as a JOIN \"player\" as b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND b.\"playerType\" IN ('INVITED','INVITEE','REJECTED') " +
-                    "ORDER BY a.\"updated\" DESC ";
+            "SELECT b.* FROM GAME as a JOIN PLAYER as b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND b.PLAYERTYPE IN ('INVITED','INVITEE','REJECTED') " +
+                    "ORDER BY a.updated DESC ";
     String COUNT_ALL_INVITED_FOR_VISITOR_ID =
-            "SELECT count(b.*) FROM \"game\" as a JOIN \"player\" as b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND b.\"playerType\" IN ('INVITED','INVITEE','REJECTED') ";
+            "SELECT count(b.*) FROM GAME as a JOIN PLAYER as b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND b.PLAYERTYPE IN ('INVITED','INVITEE','REJECTED') ";
 
 
     String FIND_NEWGAMES_BY_VISITOR_ID =
-            "SELECT a.* FROM \"game\" as a JOIN \"player\" b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND a.\"state\" IN ('INITIALIZED','PENDING_INVITATIONS','PREPARED') " +
-                    "ORDER BY a.\"updated\" DESC ";
+            "SELECT a.* FROM GAME as a JOIN PLAYER b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND a.STATE IN ('INITIALIZED','PENDING_INVITATIONS','PREPARED') " +
+                    "ORDER BY a.UPDATED DESC ";
     String COUNT_NEWGAMES_BY_VISITOR_ID =
-            "SELECT count(a.*) FROM \"game\" as a JOIN \"player\" b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND a.\"state\" IN ('INITIALIZED','PENDING_INVITATIONS','PREPARED') ";
+            "SELECT count(a.*) FROM GAME as a JOIN PLAYER b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND a.STATE IN ('INITIALIZED','PENDING_INVITATIONS','PREPARED') ";
 
     String FIND_STARTEDGAMES_BY_VISITOR_ID =
-            "SELECT a.* FROM \"game\" as a JOIN \"player\" as b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND a.\"state\" IN ('STARTED','INITIATOR_MOVE','INVITEE_MOVE','BOT_MOVE') " +
-                    "ORDER BY a.\"updated\" DESC ";
+            "SELECT a.* FROM GAME as a JOIN PLAYER as b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND a.STATE IN ('STARTED','INITIATOR_MOVE','INVITEE_MOVE','BOT_MOVE') " +
+                    "ORDER BY a.updated DESC ";
     String COUNT_STARTEDGAMES_BY_VISITOR_ID =
-            "SELECT count(a.*) FROM \"game\" as a JOIN \"player\" as b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND a.\"state\" IN ('STARTED','INITIATOR_MOVE','INVITEE_MOVE','BOT_MOVE') ";
+            "SELECT count(a.*) FROM GAME as a JOIN PLAYER as b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND a.STATE IN ('STARTED','INITIATOR_MOVE','INVITEE_MOVE','BOT_MOVE') ";
 
     String FIND_FINISHEDGAMES_BY_VISITOR_ID =
-            "SELECT a.* FROM \"game\" as a JOIN \"player\" as b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND a.\"state\" IN ('FINISHED','STOPPED','CANCELLED') " +
-                    "ORDER BY a.\"updated\" DESC ";
+            "SELECT a.* FROM GAME as a JOIN player as b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND a.STATE IN ('FINISHED','STOPPED','CANCELLED') " +
+                    "ORDER BY a.updated DESC ";
     String COUNT_FINISHEDGAMES_BY_VISITOR_ID =
-            "SELECT count(a.*) FROM \"game\" as a JOIN \"player\" as b " +
-                    "WHERE a.\"game_id\" = b.\"game_id\" " +
-                    "AND b.\"visitor_id\" = :visitorId " +
-                    "AND a.\"state\" IN ('FINISHED','STOPPED','CANCELLED') ";
+            "SELECT count(a.*) FROM GAME as a JOIN PLAYER as b " +
+                    "WHERE a.GAME_ID = b.GAME_ID " +
+                    "AND b.VISITOR_ID = :visitorId " +
+                    "AND a.STATE IN ('FINISHED','STOPPED','CANCELLED') ";
 
     
     default String getYear() {
         return String.valueOf(LocalDate.now().getYear());
     }
-    default String getMonth() {
+    default String getMaand() {
         return String.valueOf(LocalDate.now().getMonth());
     }
     default String getDay() {

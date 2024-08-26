@@ -41,8 +41,8 @@ public class GameDto {
     private String style;
     private int ante;
 
-    private int year;
-    private Month month;
+    private int jaar;
+    private Month maand;
     private String week;
     private int weekday;
 

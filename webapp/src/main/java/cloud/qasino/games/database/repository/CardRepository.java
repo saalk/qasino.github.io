@@ -14,17 +14,17 @@ import java.util.List;
 public interface CardRepository extends JpaRepository<Card, Long> {
 
     public final static String FIND_CARDS_BY_GAME_ID =
-            "SELECT * FROM \"card\" " +
-                    "WHERE \"game_id\" = :gameId ";
+            "SELECT * FROM CARD " +
+                    "WHERE GAME_ID = :gameId ";
     public final static String COUNT_CARDS_BY_GAME_ID =
-            "SELECT count(*) FROM \"card\"  " +
-                    "WHERE \"game_id\" = :gameId ";
+            "SELECT count(*) FROM CARD  " +
+                    "WHERE GAME_ID = :gameId ";
 
     // counters
     int countByGame(Game game);
 
-    String COUNT_CARDS_FOR_INITIATOR = "SELECT count(*) FROM \"card\" as c JOIN \"game\" as g WHERE c.\"game_id\" = g.\"game_id\" " +
-            "AND g.\"initiator\" = :initiator";
+    String COUNT_CARDS_FOR_INITIATOR = "SELECT count(*) FROM CARD as c JOIN GAME as g WHERE c.GAME_ID = g.GAME_ID " +
+            "AND g.INITIATOR = :initiator";
     @Query(value = COUNT_CARDS_FOR_INITIATOR, nativeQuery = true)
     Integer countCardsForInitiator(@Param(value = "initiator") String initiator);
 
@@ -40,6 +40,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     List<Card> findByGameOrderByLocationAscSequenceAsc(Game game);
 
     List<Card> findByGameOrderBySequenceAsc(Game game);
-    @Query(value = "SELECT * FROM \"card\" where \"game_id\" = :gameId ORDER BY \"sequence\" ASC ", nativeQuery = true)
+    @Query(value = "SELECT * FROM CARD where GAME_ID = :gameId ORDER BY SEQUENCE ASC ", nativeQuery = true)
     List<Card> findByGameIdOrderBySequenceAsc(long gameId);
 }

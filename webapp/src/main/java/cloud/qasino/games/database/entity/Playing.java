@@ -24,9 +24,9 @@ import java.util.Objects;
 // @Data for JPA entities is an antipattern
 // But we override equals, hash and toString and have noargs constructor.
 @Data
-@JsonIdentityInfo(generator = JSOGGenerator.class, property = "turnId")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "playing"
+//@JsonIdentityInfo(generator = JSOGGenerator.class, property = "turnId")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "PLAYING"
 //        , indexes =
 //        {@Index(name = "playing_game_index", columnList = "game_id", unique = false)
 //          not needed : @Index(name = "turns_index", columnList = "playing_id", unique = true)
@@ -37,31 +37,31 @@ public class Playing {
     // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "playing_id")
+    @Column(name = "PLAYING_ID")
     private long playingId;
     @JsonIgnore
-    @Column(name = "created", length = 25)
+    @Column(name = "CREATED", length = 25)
     private String updated;
 
     // Foreign keys
     // one [Playing] can be part of one [Game]
     @OneToOne
-	@JoinColumn(name = "game_id", referencedColumnName = "game_id",foreignKey = @ForeignKey(name =
-			"fk_game_id"), nullable=false)
+	@JoinColumn(name = "GAME_ID", referencedColumnName = "GAME_ID",foreignKey = @ForeignKey(name =
+			"FK_GAME_ID"), nullable=false)
 	private Game game;
 
     // one [Player] can be part of one [Playing]
     @OneToOne
-    @JoinColumn(name = "player_id", referencedColumnName = "player_id",foreignKey = @ForeignKey(name =
-            "fk_player_id"), nullable=false)
+    @JoinColumn(name = "PLAYER_ID", referencedColumnName = "PLAYER_ID",foreignKey = @ForeignKey(name =
+            "FK_PLAYER_ID"), nullable=false)
     private Player player;
 
     // Functional fields
-    @Column(name = "current_round_number", nullable = true)
+    @Column(name = "CURRENT_ROUND_NUMBER", nullable = true)
     private int currentRoundNumber;
-    @Column(name = "current_seat_number", nullable = true)
+    @Column(name = "CURRENT_SEAT_NUMBER", nullable = true)
     private int currentSeatNumber;
-    @Column(name = "current_move_number", nullable = true)
+    @Column(name = "CURRENT_MOVE_NUMBER", nullable = true)
     @Setter(AccessLevel.NONE)
     private int currentMoveNumber;
     public void setCurrentMoveNumber(int currentMoveNumber) {
@@ -71,16 +71,16 @@ public class Playing {
 
     // Derived technical fields
     @Setter(AccessLevel.NONE)
-    @Column(name = "year", length = 4)
-    private int year;
+    @Column(name = "JAAR", length = 4)
+    private int jaar;
     @Setter(AccessLevel.NONE)
-    @Column(name = "month", length = 20)
-    private Month month;
+    @Column(name = "MAAND", length = 20)
+    private Month maand;
     @Setter(AccessLevel.NONE)
-    @Column(name = "week", length = 3)
+    @Column(name = "WEEK", length = 3)
     private String week;
     @Setter(AccessLevel.NONE)
-    @Column(name = "weekday", length = 2)
+    @Column(name = "WEEKDAY", length = 2)
     private int weekday;
 
     // References - the actual FK are in other tables
@@ -109,8 +109,8 @@ public class Playing {
         String result = localDateAndTime.format(formatter);
         this.updated = result.substring(0, 20);
 
-        this.year = localDateAndTime.getYear();
-        this.month = localDateAndTime.getMonth();
+        this.jaar = localDateAndTime.getYear();
+        this.maand = localDateAndTime.getMonth();
         DateTimeFormatter week = DateTimeFormatter.ofPattern("w");
         this.week = localDateAndTime.format(week);
         this.weekday = localDateAndTime.getDayOfMonth();

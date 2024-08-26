@@ -20,21 +20,21 @@ public interface LeagueRepository extends JpaRepository<League, Long> {
     Long countByName(String leagueName);
 
     // lifecycle of a league - aim to not used the dto's
-    String COUNT_LEAGUES_FOR_INITIATOR = "SELECT count(*) FROM \"league\" as l WHERE l.\"visitor_id\" = :initiator";
+    String COUNT_LEAGUES_FOR_INITIATOR = "SELECT count(*) FROM LEAGUE as l WHERE l.VISITOR_ID = :initiator";
     @Query(value = COUNT_LEAGUES_FOR_INITIATOR, nativeQuery = true)
     Integer countLeaguesForInitiator(@Param(value = "initiator") String initiator);
 
     // lifecycle of a visitor - aim to not used the dto's
     Optional<League> findLeagueByNameAndNameSequence(String leagueName, int leagueNameSequence);
-    @Query(value = "SELECT * FROM \"league\" where \"game_id\" = :gameId ", nativeQuery = true)
+    @Query(value = "SELECT * FROM LEAGUE where GAME_ID = :gameId ", nativeQuery = true)
     League findByGameId(Long gameId);
 
     public final static String FIND_LEAGUES_FOR_VISITOR_ID =
-            "SELECT * FROM \"league\" a WHERE a.\"visitor_id\" = :visitorId " +
-                    "AND a.\"is_active\" = CAST('true' AS BOOLEAN) ORDER BY \"created\" desc ";
+            "SELECT * FROM LEAGUE a WHERE a.VISITOR_ID = :visitorId " +
+                    "AND a.IS_ACTIVE = CAST('true' AS BOOLEAN) ORDER BY CREATED desc ";
     public final static String COUNT_LEAGUES_FOR_VISITOR_ID =
-            "SELECT count(*) FROM \"league\" a WHERE a.\"visitor_id\" = :visitorId " +
-                    "AND a.\"is_active\" = CAST('true' AS BOOLEAN) ";
+            "SELECT count(*) FROM LEAGUE a WHERE a.VISITOR_ID = :visitorId " +
+                    "AND a.IS_ACTIVE = CAST('true' AS BOOLEAN) ";
     @Query(value = FIND_LEAGUES_FOR_VISITOR_ID, countQuery = COUNT_LEAGUES_FOR_VISITOR_ID, nativeQuery = true)
     public List<League> findLeaguesForVisitorWithPage(
             @Param("visitorId") long visitorId,

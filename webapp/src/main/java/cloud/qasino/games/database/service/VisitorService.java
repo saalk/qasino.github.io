@@ -11,7 +11,9 @@ import cloud.qasino.games.dto.model.VisitorDto;
 import cloud.qasino.games.dto.request.CreationDto;
 import cloud.qasino.games.dto.request.ParamsDto;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -145,8 +147,7 @@ public class VisitorService {
         user.setRoles(Collections.singleton(basicRole));
         user.setPassword(encoder.encode(user.getPassword()));
         Visitor savedVisitor = visitorRepository.save(user);
-        Visitor retrievedVisitor = visitorRepository.getReferenceById(savedVisitor.getVisitorId());
-        return VisitorMapper.INSTANCE.toDto(retrievedVisitor);
+        return VisitorMapper.INSTANCE.toDto(savedVisitor);
     }
     public VisitorDto saveNewAdmin(Visitor admin) {
         List<Role> roles = new ArrayList<>();
@@ -155,8 +156,7 @@ public class VisitorService {
         admin.setRoles(roles);
         admin.setPassword(encoder.encode(admin.getPassword()));
         Visitor savedVisitor = visitorRepository.save(admin);
-        Visitor retrievedVisitor = visitorRepository.getReferenceById(savedVisitor.getVisitorId());
-        return VisitorMapper.INSTANCE.toDto(retrievedVisitor);
+        return VisitorMapper.INSTANCE.toDto(savedVisitor);
     }
     void createUserIfNotFound(Visitor search) {
         Visitor user = visitorRepository.findByUsername(search.getUsername());

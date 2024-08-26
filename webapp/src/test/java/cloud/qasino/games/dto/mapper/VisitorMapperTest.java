@@ -35,8 +35,8 @@ class VisitorMapperTest extends QasinoSimulator {
         assertEquals(visitorDto.getEmail(), visitor.getEmail());
         assertEquals(visitorDto.getBalance(), visitor.getBalance());
         assertEquals(visitorDto.getSecuredLoan(), visitor.getSecuredLoan());
-        assertEquals(visitorDto.getYear(), visitor.getYear());
-        assertEquals(visitorDto.getMonth(), visitor.getMonth());
+        assertEquals(visitorDto.getJaar(), visitor.getJaar());
+        assertEquals(visitorDto.getMaand(), visitor.getMaand());
         assertEquals(visitorDto.getWeek(), visitor.getWeek());
         assertEquals(visitorDto.getWeekday(), visitor.getWeekday());
     }

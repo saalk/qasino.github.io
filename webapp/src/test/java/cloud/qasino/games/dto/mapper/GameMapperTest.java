@@ -38,8 +38,8 @@ class GameMapperTest extends QasinoSimulator {
         assertEquals(gameDto.getType(), game.getType());
         assertEquals(gameDto.getStyle(), game.getStyle());
         assertEquals(gameDto.getAnte(), game.getAnte());
-        assertEquals(gameDto.getYear(), game.getYear());
-        assertEquals(gameDto.getMonth(), game.getMonth());
+        assertEquals(gameDto.getJaar(), game.getJaar());
+        assertEquals(gameDto.getMaand(), game.getMaand());
         assertEquals(gameDto.getWeek(), game.getWeek());
         assertEquals(gameDto.getWeekday(), game.getWeekday());
         // derived

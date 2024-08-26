@@ -38,9 +38,9 @@ import static java.time.temporal.TemporalAdjusters.next;
 // @Data for JPA entities is an antipattern
 // But we override equals, hash and toString and have noargs constructor.
 @Data
-@JsonIdentityInfo(generator = JSOGGenerator.class, property = "leagueId")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "league", indexes = {
+//@JsonIdentityInfo(generator = JSOGGenerator.class, property = "leagueId")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "LEAGUE", indexes = {
         // not needed : @Index(name = "leagues_index", columnList = "league_id", unique = true)
 })
 public class League {
@@ -48,28 +48,28 @@ public class League {
     // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "league_id", nullable = false)
+    @Column(name = "LEAGUE_ID", nullable = false)
     private long leagueId;
     @JsonIgnore
-    @Column(name = "created", length = 25)
+    @Column(name = "CREATED", length = 25)
     private String created;
 
     // Foreign keys
     // many [League] can be part of one [Visitor]
     @ManyToOne // no cascade otherwise league.visitor is set to null !!
-    @JoinColumn(name = "visitor_id", referencedColumnName = "visitor_id", foreignKey = @ForeignKey
-            (name = "fk_visitor_id"), nullable = false)
+    @JoinColumn(name = "VISITOR_ID", referencedColumnName = "VISITOR_ID", foreignKey = @ForeignKey
+            (name = "FK_VISITOR_ID"), nullable = false)
     private Visitor visitor;
 
     // Normal fields
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "NAME", nullable = false, length = 50)
     private String name;
-    @Column(name = "name_seq")
+    @Column(name = "NAME_SEQ")
     private int nameSequence;
     @Getter(AccessLevel.NONE)
-    @Column(name = "is_active")
+    @Column(name = "IS_ACTIVE")
     private boolean active;
-    @Column(name = "ended", length = 25)
+    @Column(name = "ENDED", length = 25)
     private String ended;
 
     // References - the actual FK are in other tables

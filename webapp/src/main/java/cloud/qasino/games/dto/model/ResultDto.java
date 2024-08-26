@@ -46,8 +46,8 @@ public class ResultDto {
 
     // Normal fields
     private Type type;
-    private int year;
-    private Month month;
+    private int jaar;
+    private Month maand;
     private String week;
     private int weekday;
 

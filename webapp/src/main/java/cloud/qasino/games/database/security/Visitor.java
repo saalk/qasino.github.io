@@ -46,77 +46,79 @@ import java.util.Set;
 @NoArgsConstructor
 @JsonIdentityInfo(generator = JSOGGenerator.class)
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "visitor", indexes =
-        {@Index(name = "visitors_index", columnList = "visitor_id", unique = true),
-                @Index(name = "alias_index", columnList = "alias", unique = false),
-                @Index(name = "username_index", columnList = "username", unique = true)
+@Table(name = "VISITOR", indexes =
+        {@Index(name = "VISITORS_INDEX", columnList = "VISITOR_ID", unique = true),
+                @Index(name = "ALIAS_INDEX", columnList = "ALIAS", unique = false),
+                @Index(name = "USERNAME_INDEX", columnList = "USERNAME", unique = true)
         })
 public class Visitor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "visitor_id", nullable = false)
+    @Column(name = "VISITOR_ID", nullable = false)
     private long visitorId;
 
     @JsonIgnore
-    @Column(name = "created", length = 25)
+    @Column(name = "CREATED", length = 25)
     private String created;
 
-    @Column(name = "username", length = 25, unique = true)
+    @Column(name = "USERNAME", length = 25, unique = true)
     private String username;
 
-    @JsonIgnore
-    @Column(name = "password", length = 60)
+//    @JsonIgnore
+    @Column(name = "PASSWORD", length = 60)
     private String password;
 
-    @JsonIgnore
+//    @JsonIgnore
     private boolean enabled;
 
-    @JsonIgnore
+//    @JsonIgnore
     private boolean isUsing2FA;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "visitor_id", referencedColumnName = "visitor_id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
+    @JoinTable(name = "USERS_ROLES", joinColumns =
+    @JoinColumn(name = "VISITOR_ID", referencedColumnName = "VISITOR_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID"))
     private Collection<Role> roles;
 
     // Foreign keys
 
 
-    @JsonProperty("aliasSequence")
-    @Column(name = "alias_seq")
+//    @JsonProperty("aliassequence")
+    @Column(name = "ALIAS_SEQ")
     private int aliasSequence;
 
     // Normal fields
-    @JsonProperty("alias")
-    @Column(name = "alias", length = 50, nullable = false)
+//    @JsonProperty("alias")
+    @Column(name = "ALIAS", length = 50, nullable = false)
     private String alias;
 
-    @JsonProperty("email")
-    @Column(name = "email", length = 50, nullable = true)
+//    @JsonProperty("email")
+    @Column(name = "EMAIL", length = 50, nullable = true)
     private String email;
 
-    @Column(name = "balance")
+    @Column(name = "BALANCE")
     private int balance;
 
-    @Column(name = "secured_loan")
+    @Column(name = "SECURED_LOAN")
     private int securedLoan;
 
     @Setter(AccessLevel.NONE)
-    @Column(name = "year", length = 4)
-    private int year;
+    @Column(name = "JAAR", length = 4)
+    private int jaar;
 
     @Setter(AccessLevel.NONE)
-    @Column(name = "month", length = 20)
-    private Month month;
+    @Column(name = "MAAND", length = 20)
+    private Month maand;
 
     @Setter(AccessLevel.NONE)
-    @Column(name = "week", length = 3)
+    @Column(name = "WEEK", length = 3)
     private String week;
 
     @JsonIgnore
     @Setter(AccessLevel.NONE)
-    @Column(name = "weekday", length = 2)
+    @Column(name = "WEEKDAY", length = 2)
     private int weekday;
 
     // References
@@ -159,8 +161,8 @@ public class Visitor {
         String result = localDateAndTime.format(formatter);
         this.created = result.substring(0, 20);
 
-        this.year = localDateAndTime.getYear();
-        this.month = localDateAndTime.getMonth();
+        this.jaar = localDateAndTime.getYear();
+        this.maand = localDateAndTime.getMonth();
         DateTimeFormatter week = DateTimeFormatter.ofPattern("w");
         this.week = localDateAndTime.format(week);
         this.weekday = localDateAndTime.getDayOfMonth();
