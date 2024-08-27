@@ -1,16 +1,22 @@
 Back to [README](README.md)
 
-### Running the application
+### Running the application in intelij
 - 'mvn spring-boot:run -Dspring.profiles.active=dev`
 - Home go to: http://localhost:8080/qasinoResponse/api/home
 - H2 console: http://localhost:8080/h2-console/
 - Swagger springfox: http://localhost:8080/v2/api-docs
 - Swagger ui: http://localhost:8080/swagger-ui/
-- in intellij
+- in intellij do
+- ![Intelij](Running-the-app.png)
 
 -Dspring.profiles.active=dev
+-Djasypt.encryptor.password=****
 
-- ![Intelij](Running-the-app.png)
+### Running the app in Heroku
+  https://devcenter.heroku.com/articles/deploying-java
+
+  -Dspring.profiles.active=dev
+
 
 ### To investigate
 To make life easier use [variables] (https://graphql.org/learn/queries/#variables) in your GraphQL query.

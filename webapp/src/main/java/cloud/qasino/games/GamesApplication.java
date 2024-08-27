@@ -1,5 +1,6 @@
 package cloud.qasino.games;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAutoConfiguration
 @EntityScan(basePackages = "cloud.qasino.games.*")
 @EnableJpaAuditing
+@EnableEncryptableProperties
 @Slf4j
 public class GamesApplication {
 

@@ -22,6 +22,7 @@
 		<enforcer.legacy.fail>false</enforcer.legacy.fail>
 		<httpclient.version>4.5.14</httpclient.version>
 		<thymeleaf-extras-springsecurity6.version>3.1.2.RELEASE</thymeleaf-extras-springsecurity6.version>
+		<jasypt-spring-boot-starter.version>3.0.5</jasypt-spring-boot-starter.version>
 
 		<!-- 2: database -->
 		<h2.version>2.2.224</h2.version>
@@ -105,7 +106,11 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>${jasypt-spring-boot-starter.version}</version>
+		</dependency>
 
 		<!-- 1: spring boot and web development -->
 		<dependency>
@@ -340,33 +345,22 @@
     </dependencies>
 
 	<build>
-		<!-- enable resource filtering to switch profiles -->
-<!--		<resources>-->
-<!--			<resource>-->
-<!--				<directory>src/main/resources</directory>-->
-<!--				<filtering>true</filtering>-->
-<!--			</resource>-->
-<!--		</resources>-->
+
 		<plugins>
-<!--			<plugin>-->
-<!--				<groupId>io.swagger</groupId>-->
-<!--				<artifactId>swagger-codegen-maven-plugin</artifactId>-->
-<!--				<version>${swagger-codegen-maven-plugin}</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<goals>-->
-<!--							<goal>generate</goal>-->
-<!--						</goals>-->
-<!--						<configuration>-->
-<!--							<inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>-->
-<!--							<language>java</language>-->
-<!--							<configOptions>-->
-<!--								<sourceFolder>src/gen/java/main</sourceFolder>-->
-<!--							</configOptions>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
+			<!-- tell Maven to copy the jar files that your app depends on to
+			the target/dependency directory.-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals><goal>copy-dependencies</goal></goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

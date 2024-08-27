@@ -8,5 +8,5 @@
 # The PID is then written to a file using > /path/to/app/pid.file
 # nohup lets the java process run in the background even after the user is logged out.
 
-nohup java -jar webapp/target/webapp-1.0.0-SNAPSHOT.war > webapp/logs/LogFile.log 2>&1 &
+nohup java -jar webapp/target/webapp-1.0.0-SNAPSHOT.war > /logs/LogFile.log 2>&1 &
 echo $! > webapp/target/pid.file

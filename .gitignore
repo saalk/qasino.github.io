@@ -54,3 +54,4 @@ Thumbs.db
 **/*.swp
 **/jasypt_pwd_*.txt
 **/cookies.txt
+/.runGamesApplication/

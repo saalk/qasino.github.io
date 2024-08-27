@@ -1,5 +1,6 @@
 package cloud.qasino.games;
 
+import cloud.qasino.games.config.PropertyServiceForJasyptStarter;
 import cloud.qasino.games.database.entity.Card;
 import cloud.qasino.games.database.entity.CardMove;
 import cloud.qasino.games.database.entity.Game;
@@ -28,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -43,6 +45,9 @@ public class QuickTestAtStartup implements ApplicationRunner {
 
     @Value("${spring.profiles.active:}")
     private String activeProfiles;
+
+    @Autowired
+    ApplicationContext appCtx;
 
     // @formatter:off
     @Autowired VisitorRepository visitorRepository;
@@ -68,6 +73,12 @@ public class QuickTestAtStartup implements ApplicationRunner {
         log.info("\nApplication started with argument '--test=' is: \n {}\n",
                 optionTest);
         if (profiles[0].equals("dev") && !optionTest.isEmpty() && !optionTest.equals("[skip]")) tests();
+
+        PropertyServiceForJasyptStarter service = appCtx.getBean(PropertyServiceForJasyptStarter.class);
+        log.info("\nJasypt password 'encrypted.property.sa' decrypted is: \n {}\n",
+                service.getPropertySa());
+
+
     }
 
     public void tests() {
@@ -76,8 +87,8 @@ public class QuickTestAtStartup implements ApplicationRunner {
         int rand_int1 = rand.nextInt(100000);
         // A new visitor with 2 friends arrive
         Visitor visitor = Visitor.buildDummy("user1" + rand_int1, "User1" + rand_int1);
-        Visitor friend1 = Visitor.buildDummy("friend1"+ rand_int1, "Friend1" + rand_int1);
-        Visitor friend2 = Visitor.buildDummy("friend2"+ rand_int1, "Friend2" + rand_int1);
+        Visitor friend1 = Visitor.buildDummy("friend1" + rand_int1, "Friend1" + rand_int1);
+        Visitor friend2 = Visitor.buildDummy("friend2" + rand_int1, "Friend2" + rand_int1);
 
         int pawn = Visitor.pawnShipValue(0);
         visitor.pawnShip(pawn);
@@ -99,7 +110,7 @@ public class QuickTestAtStartup implements ApplicationRunner {
         friend2 = visitorRepository.save(friend2);
 
         // The visitor starts a league
-        League league = League.buildDummy(visitor,"");
+        League league = League.buildDummy(visitor, "");
         league.endLeagueThisMonth();
         leagueRepository.save(league);
 
