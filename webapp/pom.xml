@@ -347,27 +347,27 @@
 	<build>
 		<plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>${checkstyle-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<configLocation>google_checks.xml</configLocation>
-					<consoleOutput>true</consoleOutput>
-					<failsOnError>false</failsOnError>
-					<failOnViolation>false</failOnViolation>
-					<includeTestSourceDirectory>true</includeTestSourceDirectory>
-					<excludes>**/target/**/*</excludes>
-				</configuration>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--				<version>${checkstyle-maven-plugin.version}</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>validate</phase>-->
+<!--						<goals>-->
+<!--							<goal>check</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--				<configuration>-->
+<!--					<configLocation>google_checks.xml</configLocation>-->
+<!--					<consoleOutput>false</consoleOutput>-->
+<!--					<failsOnError>false</failsOnError>-->
+<!--					<failOnViolation>false</failOnViolation>-->
+<!--					<includeTestSourceDirectory>true</includeTestSourceDirectory>-->
+<!--					<excludes>**/target/**/*</excludes>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 			<!-- tell Maven to copy the jar files that your app depends on to
 			the target/dependency directory.-->
 			<plugin>
