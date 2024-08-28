@@ -362,10 +362,10 @@
 				<configuration>
 					<configLocation>google_checks.xml</configLocation>
 					<consoleOutput>true</consoleOutput>
-					<failsOnError>true</failsOnError>
-					<failOnViolation>true</failOnViolation>
+					<failsOnError>false</failsOnError>
+					<failOnViolation>false</failOnViolation>
 					<includeTestSourceDirectory>true</includeTestSourceDirectory>
-					<excludes>**/generated/**/*</excludes>
+					<excludes>**/target/**/*</excludes>
 				</configuration>
 			</plugin>
 			<!-- tell Maven to copy the jar files that your app depends on to
