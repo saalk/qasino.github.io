@@ -8,7 +8,6 @@ import cloud.qasino.games.pattern.singleton.OnlineVisitorsPerDay;
 import cloud.qasino.games.pattern.statemachine.event.QasinoEvent;
 import cloud.qasino.games.web.AjaxUtils;
 import cloud.qasino.games.web.MessageHelper;
-import com.google.common.base.Throwables;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -215,7 +214,8 @@ public class HomeThymeleafController extends AbstractThymeleafController {
         Integer statusCode = (Integer) request.getAttribute("jakarta.servlet.error.status_code");
         Throwable throwable = (Throwable) request.getAttribute("jakarta.servlet.error.exception");
         // String servletName = (String) request.getAttribute("jakarta.servlet.error.servlet_name");
-        String exceptionMessage = getExceptionMessage(throwable, statusCode);
+//        String exceptionMessage = getExceptionMessage(throwable, statusCode);
+        String exceptionMessage = "getExceptionMessage(throwable, statusCode);";
         String requestUri = (String) request.getAttribute("jakarta.servlet.error.request_uri");
         if (requestUri == null) {
             requestUri = "Unknown";
@@ -226,13 +226,13 @@ public class HomeThymeleafController extends AbstractThymeleafController {
         return ERROR_VIEW_LOCATION;
     }
 
-    private String getExceptionMessage(Throwable throwable, Integer statusCode) {
-        if (throwable != null) {
-            return Throwables.getRootCause(throwable).getMessage();
-        }
-        HttpStatus httpStatus = HttpStatus.valueOf(statusCode);
-        return httpStatus.getReasonPhrase();
-    }
+//    private String getExceptionMessage(Throwable throwable, Integer statusCode) {
+//        if (throwable != null) {
+//            return Throwables.getRootCause(throwable).getMessage();
+//        }
+//        HttpStatus httpStatus = HttpStatus.valueOf(statusCode);
+//        return httpStatus.getReasonPhrase();
+//    }
 
     private String getUserName(Principal principal) {
         if (principal == null) {

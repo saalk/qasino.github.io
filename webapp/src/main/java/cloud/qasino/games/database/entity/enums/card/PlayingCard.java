@@ -11,8 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.commons.lang3.StringUtils.left;
-import static org.apache.commons.lang3.StringUtils.right;
+//import static org.apache.commons.lang3.StringUtils.left;
+//import static org.apache.commons.lang3.StringUtils.right;
 
 @Data
 @Slf4j
@@ -60,8 +60,9 @@ public class PlayingCard {
     public PlayingCard(String rankAndSuit) {
         if (!isValid2LetterCardId(rankAndSuit)) throw new RuntimeException();
         this.rankAndSuit = rankAndSuit;
-        this.rank = Rank.fromLabel(left(rankAndSuit, 1));
-        this.suit = Suit.fromLabel(right(rankAndSuit, 1));
+        this.rank = Rank.fromLabel(rankAndSuit.substring(0,1));
+//        this.suit = Suit.fromLabel(right(rankAndSuit, 1));
+        this.suit = Suit.fromLabel(rankAndSuit.substring(rankAndSuit.length() - 1));
         this.value = calculateValueWithDefaultHighlowFromRank(rank, null);
     }
     public PlayingCard(Rank rank, Suit suit) {

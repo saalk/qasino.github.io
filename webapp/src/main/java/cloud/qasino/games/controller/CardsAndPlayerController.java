@@ -9,8 +9,8 @@ import cloud.qasino.games.database.repository.CardRepository;
 import cloud.qasino.games.database.repository.GameRepository;
 import cloud.qasino.games.database.repository.PlayerRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.io.IOUtils;
+//import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -55,8 +55,9 @@ public class CardsAndPlayerController {
     @GetMapping(value = "card/{rankAndSuit}/image", produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody
     byte[] getPlayingCardImageWithMediaType(@PathVariable("rankAndSuit") String card) throws IOException {
-        InputStream in = getClass().getResourceAsStream("/resources/images/playingcard/svg/diamonds-ten.svg");
-        return IOUtils.toByteArray(in);
+//        InputStream in = getClass().getResourceAsStream("/resources/images/playingcard/svg/diamonds-ten.svg");
+//        return IOUtils.toByteArray(in);
+        return null;
     }
 
     @PutMapping(value = "player/{playerId}/{order}")
@@ -76,12 +77,12 @@ public class CardsAndPlayerController {
 
         // validations
         String[] orders = new String[]{"up", "down"};
-        if (!StringUtils.isNumeric(id)
-                || !StringUtils.isNumeric(id)
-                || !Arrays.asList(orders).contains(order)) {
-            // 400
-            return ResponseEntity.badRequest().headers(headers).build();
-        }
+//        if (!StringUtils.isNumeric(id)
+//                || !StringUtils.isNumeric(id)
+//                || !Arrays.asList(orders).contains(order)) {
+//            // 400
+//            return ResponseEntity.badRequest().headers(headers).build();
+//        }
         long playerId = Long.parseLong(id);
         int orderValue = Integer.parseInt(order);
 

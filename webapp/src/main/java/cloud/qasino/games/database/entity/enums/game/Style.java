@@ -3,7 +3,7 @@ package cloud.qasino.games.database.entity.enums.game;
 import cloud.qasino.games.database.entity.enums.game.style.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 
 @Getter
 @Setter
@@ -43,7 +43,8 @@ public class Style {
         if (inputLabel == null || inputLabel.isEmpty()) {
             return new Style();
         }
-        String label = StringUtils.lowerCase(inputLabel);
+//        String label = StringUtils.lowerCase(inputLabel);
+        String label = inputLabel;
 
         AnteToWin anteToWin = AnteToWin.NA;
         BettingStrategy bettingStrategy = BettingStrategy.REGULAR;

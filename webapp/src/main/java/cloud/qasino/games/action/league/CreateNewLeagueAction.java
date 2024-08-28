@@ -10,7 +10,7 @@ import cloud.qasino.games.dto.mapper.VisitorMapper;
 import cloud.qasino.games.dto.model.LeagueDto;
 import cloud.qasino.games.pattern.statemachine.event.EventOutput;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.Resource;
@@ -25,7 +25,7 @@ public class CreateNewLeagueAction extends GenericLookupsAction<EventOutput.Resu
     @Override
     public EventOutput.Result perform(Qasino qasino) {
 
-        if (!(StringUtils.isEmpty(qasino.getCreation().getSuppliedLeagueName()))) {
+        if (qasino.getCreation().getSuppliedLeagueName() != null) {
             int sequence = Math.toIntExact(leaguesService.countByName(qasino.getCreation().getSuppliedLeagueName()));
             if (sequence != 0) {
                 qasino.getMessage().setConflictErrorMessage("leagueName",String.valueOf(qasino.getCreation().getSuppliedLeagueName()),"leagueName [" + String.valueOf(qasino.getCreation().getSuppliedLeagueName()) + "] not available any more");

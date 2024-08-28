@@ -9,7 +9,7 @@ import cloud.qasino.games.dto.model.VisitorDto;
 import cloud.qasino.games.exception.MyNPException;
 import cloud.qasino.games.pattern.statemachine.event.EventOutput;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public class RegisterVisitorAction extends GenericLookupsAction<EventOutput.Resu
     @Override
     public EventOutput.Result perform(Qasino qasino) {
 
-        if (!(StringUtils.isEmpty(qasino.getCreation().getSuppliedAlias()))) {
+        if (qasino.getCreation().getSuppliedAlias() != null) {
             int sequence = Math.toIntExact(visitorService.countByAlias(qasino.getCreation().getSuppliedAlias()));
             sequence++;
             // todo LOW split alias and number

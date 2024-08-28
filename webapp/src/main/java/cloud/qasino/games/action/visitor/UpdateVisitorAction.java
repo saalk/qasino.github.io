@@ -6,7 +6,7 @@ import cloud.qasino.games.dto.Qasino;
 import cloud.qasino.games.pattern.statemachine.event.EventOutput;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -20,7 +20,7 @@ public class UpdateVisitorAction extends GenericLookupsAction<EventOutput.Result
     @Override
     public EventOutput.Result perform(Qasino qasino) {
 
-        if (!(StringUtils.isEmpty(qasino.getCreation().getSuppliedAlias()))) {
+        if (qasino.getCreation().getSuppliedAlias() != null) {
             int sequence = Math.toIntExact(visitorService.countByAlias(qasino.getCreation().getSuppliedAlias()));
             if (sequence != 0 &&
                     !qasino.getCreation().getSuppliedAlias().equals(qasino.getVisitor().getAlias())) {

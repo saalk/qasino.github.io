@@ -3,7 +3,7 @@ package cloud.qasino.games.database.entity.enums.card.playingcard;
 import cloud.qasino.games.database.entity.enums.game.Type;
 import cloud.qasino.games.database.entity.enums.LabeledEnum;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Transient;
@@ -47,7 +47,7 @@ public enum Rank implements LabeledEnum {
     }
 
     public static Rank fromLabel(String inputLabel) {
-        String label = StringUtils.upperCase(inputLabel);
+        String label = inputLabel.toUpperCase();
         try {
             Rank.lookup.get(label);
         } catch (Exception e) {

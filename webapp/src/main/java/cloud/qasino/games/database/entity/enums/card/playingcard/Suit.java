@@ -4,10 +4,11 @@ import cloud.qasino.games.database.entity.enums.LabeledEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang.StringUtils;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Transient;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,10 +37,11 @@ public enum Suit implements LabeledEnum {
 
     private static final Random SUIT = new Random();
     private static final Suit[] suits = values();
+
     // declare a method inside an enum class body that is static
     // and returns an enum value. This method will call nextInt()
     // from a Random object
-    public static Suit randomSuit()  {
+    public static Suit randomSuit() {
         // Inside randomDirection(), we call the method nextInt() with an
         // integer argument. The nextInt() method returns a random number
         // to access the directions array; therefore, we need to make sure
@@ -50,16 +52,19 @@ public enum Suit implements LabeledEnum {
         while (suit == Suit.JOKERS) {
             // we dont want the suit joker
             suit = suits[SUIT.nextInt(suits.length)];
-        };
+        }
+        ;
         return suit;
     }
 
     public static final Map<String, Suit> suitMapNoError = new HashMap<>();
     private static final Map<String, Suit> lookup = new HashMap<>();
+
     static {
         for (Suit suit : EnumSet.allOf(Suit.class))
             lookup.put(suit.getLabel(), suit);
     }
+
     static {
         for (Suit suit : EnumSet.allOf(Suit.class))
             if (!suit.getLabel().toLowerCase().equals("error"))
@@ -70,7 +75,7 @@ public enum Suit implements LabeledEnum {
     private String label;
 
     public static Suit fromLabel(String inputLabel) {
-        String label = StringUtils.upperCase(inputLabel);
+        String label = inputLabel.toUpperCase();
         try {
             Suit.lookup.get(label);
         } catch (Exception e) {
