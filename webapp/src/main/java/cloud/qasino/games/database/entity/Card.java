@@ -3,12 +3,23 @@ package cloud.qasino.games.database.entity;
 import cloud.qasino.games.database.entity.enums.card.Face;
 import cloud.qasino.games.database.entity.enums.card.Location;
 import cloud.qasino.games.database.entity.enums.card.Position;
-import com.fasterxml.jackson.annotation.*;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -23,12 +34,11 @@ import java.util.Objects;
 //@JsonIdentityInfo(generator = JSOGGenerator.class, property = "cardId")
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "CARD", indexes =
-        { @Index(name = "CARDS_GAME_INDEX", columnList = "GAME_ID", unique = false ),
-          // not needed : @Index(name = "cards_index", columnList = "card_id", unique = true )
+        {@Index(name = "CARDS_GAME_INDEX", columnList = "GAME_ID", unique = false),
+                // not needed : @Index(name = "cards_index", columnList = "card_id", unique = true )
         })
 public class Card {
 
-    // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CARD_ID")
@@ -45,13 +55,13 @@ public class Card {
     @ManyToOne
     @JoinColumn(name = "GAME_ID", referencedColumnName = "GAME_ID", foreignKey =
     @ForeignKey(name =
-            "FK_GAME_ID"), nullable=false)
+            "FK_GAME_ID"), nullable = false)
     private Game game;
     @JsonIgnore
     // one [Card] can be part of one [Player] or none
     @OneToOne
     @JoinColumn(name = "PLAYER_ID", referencedColumnName = "PLAYER_ID", foreignKey =
-    @ForeignKey(name ="FK_PLAYER_ID"))
+    @ForeignKey(name = "FK_PLAYER_ID"))
     private Player hand;
 
     // Normal fields
@@ -102,7 +112,7 @@ public class Card {
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return String.valueOf(this.cardId);
     }
 

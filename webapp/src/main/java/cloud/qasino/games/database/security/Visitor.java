@@ -4,9 +4,7 @@ import cloud.qasino.games.database.entity.League;
 import cloud.qasino.games.database.entity.Player;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,12 +19,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -39,7 +34,7 @@ import java.util.Random;
 import java.util.Set;
 
 @Entity
- @DynamicUpdate
+@DynamicUpdate
 // @Data for JPA entities is an antipattern
 // But we override equals, hash and toString and have noargs constructor.
 @Data
@@ -65,17 +60,17 @@ public class Visitor {
     @Column(name = "USERNAME", length = 25, unique = true)
     private String username;
 
-//    @JsonIgnore
+    //    @JsonIgnore
     @Column(name = "PASSWORD", length = 60)
     private String password;
 
-//    @JsonIgnore
+    //    @JsonIgnore
     private boolean enabled;
 
-//    @JsonIgnore
+    //    @JsonIgnore
     private boolean isUsing2FA;
 
-//    @JsonIgnore
+    //    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USERS_ROLES", joinColumns =
     @JoinColumn(name = "VISITOR_ID", referencedColumnName = "VISITOR_ID"),
@@ -85,7 +80,7 @@ public class Visitor {
     // Foreign keys
 
 
-//    @JsonProperty("aliassequence")
+    //    @JsonProperty("aliassequence")
     @Column(name = "ALIAS_SEQ")
     private int aliasSequence;
 
@@ -94,7 +89,7 @@ public class Visitor {
     @Column(name = "ALIAS", length = 50, nullable = false)
     private String alias;
 
-//    @JsonProperty("email")
+    //    @JsonProperty("email")
     @Column(name = "EMAIL", length = 50, nullable = true)
     private String email;
 
@@ -282,7 +277,7 @@ public class Visitor {
 
     @Override
     public String toString() {
-        String role = this.roles==null?"null": String.valueOf(this.roles.stream().findFirst());
+        String role = this.roles == null ? "null" : String.valueOf(this.roles.stream().findFirst());
         return "(" +
                 "visitorId=" + this.visitorId +
                 ", securedLoan=" + this.securedLoan +

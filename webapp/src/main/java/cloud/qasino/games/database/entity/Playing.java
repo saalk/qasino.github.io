@@ -1,15 +1,21 @@
 package cloud.qasino.games.database.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +40,6 @@ import java.util.Objects;
 )
 public class Playing {
 
-    // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PLAYING_ID")
@@ -46,14 +51,14 @@ public class Playing {
     // Foreign keys
     // one [Playing] can be part of one [Game]
     @OneToOne
-	@JoinColumn(name = "GAME_ID", referencedColumnName = "GAME_ID",foreignKey = @ForeignKey(name =
-			"FK_GAME_ID"), nullable=false)
-	private Game game;
+    @JoinColumn(name = "GAME_ID", referencedColumnName = "GAME_ID", foreignKey = @ForeignKey(name =
+            "FK_GAME_ID"), nullable = false)
+    private Game game;
 
     // one [Player] can be part of one [Playing]
     @OneToOne
-    @JoinColumn(name = "PLAYER_ID", referencedColumnName = "PLAYER_ID",foreignKey = @ForeignKey(name =
-            "FK_PLAYER_ID"), nullable=false)
+    @JoinColumn(name = "PLAYER_ID", referencedColumnName = "PLAYER_ID", foreignKey = @ForeignKey(name =
+            "FK_PLAYER_ID"), nullable = false)
     private Player player;
 
     // Functional fields
@@ -64,6 +69,7 @@ public class Playing {
     @Column(name = "CURRENT_MOVE_NUMBER", nullable = true)
     @Setter(AccessLevel.NONE)
     private int currentMoveNumber;
+
     public void setCurrentMoveNumber(int currentMoveNumber) {
         this.currentMoveNumber = currentMoveNumber;
         setUpdated();
@@ -139,8 +145,8 @@ public class Playing {
                 ", currentSeatNumber=" + this.currentSeatNumber +
                 ", currentMoveNumber=" + this.currentMoveNumber +
                 ", cardMoves count=" + this.cardMoves.size() +
-                ", gameId=" + (this.game == null? "": this.game.getGameId()) +
-                ", game state=" + (this.game == null? "": this.game.getState()) +
+                ", gameId=" + (this.game == null ? "" : this.game.getGameId()) +
+                ", game state=" + (this.game == null ? "" : this.game.getState()) +
                 ", weekday=" + this.weekday +
                 ")";
     }

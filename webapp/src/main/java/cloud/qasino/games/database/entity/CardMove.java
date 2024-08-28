@@ -2,16 +2,7 @@ package cloud.qasino.games.database.entity;
 
 import cloud.qasino.games.database.entity.enums.card.Location;
 import cloud.qasino.games.database.entity.enums.move.Move;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,6 +14,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -38,12 +34,11 @@ import java.util.Objects;
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "CARDMOVE", indexes = {
 //        @Index(name = "cardmove_playing_index", columnList = "playing_id", unique = false),
-                // not needed : @Index(name = "cardmove_index", columnList = "cardmove_id", unique = true)
-        }
+        // not needed : @Index(name = "cardmove_index", columnList = "cardmove_id", unique = true)
+}
 )
 public class CardMove {
 
-    // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CARDMOVE_ID", nullable = false)
@@ -125,18 +120,21 @@ public class CardMove {
     public void setSequence(int round, int seat, int move) {
         // xxyyzz format
         this.sequence =
-            String.format("%02d", round) +
-            String.format("%02d", seat) +
-            String.format("%02d", move);
+                String.format("%02d", round) +
+                        String.format("%02d", seat) +
+                        String.format("%02d", move);
     }
+
     public int getRoundFromSequence() {
-        return Integer.parseInt(this.sequence.substring(0,2));
+        return Integer.parseInt(this.sequence.substring(0, 2));
     }
+
     public int getSeatFromSequence() {
-        return Integer.parseInt(this.sequence.substring(2,4));
+        return Integer.parseInt(this.sequence.substring(2, 4));
     }
+
     public int getMoveFromSequence() {
-        return Integer.parseInt(this.sequence.substring(4,6));
+        return Integer.parseInt(this.sequence.substring(4, 6));
     }
 
     @Override

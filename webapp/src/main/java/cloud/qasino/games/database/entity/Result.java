@@ -3,16 +3,25 @@ package cloud.qasino.games.database.entity;
 import cloud.qasino.games.database.entity.enums.game.Type;
 import cloud.qasino.games.database.security.Visitor;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +41,6 @@ import java.util.Objects;
 })
 public class Result {
 
-    // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "result_id")
@@ -55,8 +63,8 @@ public class Result {
     // many [Result] can belong to one [Game]
     // TODO the game already has a result for a Player - not sure if we want this relation
     @ManyToOne
-    @JoinColumn(name = "game_id", referencedColumnName = "game_id",foreignKey = @ForeignKey(name =
-            "fk_game_id"), nullable=false)
+    @JoinColumn(name = "game_id", referencedColumnName = "game_id", foreignKey = @ForeignKey(name =
+            "fk_game_id"), nullable = false)
     private Game game;
 
     // Normal fields
@@ -120,11 +128,11 @@ public class Result {
     public String toString() {
         return "(" +
                 "resultId=" + this.resultId +
-                ", visitorId=" + (this.visitor == null? "": this.visitor.getVisitorId()) +
-                ", playerId=" + (this.player == null? "": this.player.getPlayerId()) +
-                ", playerSeat=" + (this.player == null? "": this.player.getSeat()) +
-                ", playerAvatarName=" + (this.player == null? "": this.player.getAvatarName()) +
-                ", gameId=" + (this.game == null? "": this.game.getGameId()) +
+                ", visitorId=" + (this.visitor == null ? "" : this.visitor.getVisitorId()) +
+                ", playerId=" + (this.player == null ? "" : this.player.getPlayerId()) +
+                ", playerSeat=" + (this.player == null ? "" : this.player.getSeat()) +
+                ", playerAvatarName=" + (this.player == null ? "" : this.player.getAvatarName()) +
+                ", gameId=" + (this.game == null ? "" : this.game.getGameId()) +
                 ", type=" + this.type +
                 ", weekday=" + this.weekday +
                 ", fichesWon=" + this.fichesWon +

@@ -1,10 +1,7 @@
 package cloud.qasino.games.database.entity;
 
 import cloud.qasino.games.database.security.Visitor;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -45,7 +42,6 @@ import static java.time.temporal.TemporalAdjusters.next;
 })
 public class League {
 
-    // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LEAGUE_ID", nullable = false)
@@ -97,7 +93,7 @@ public class League {
     }
 
     public static League buildDummy(Visitor visitor, String leagueName) {
-        if (leagueName.isEmpty()) leagueName="leagueName";
+        if (leagueName.isEmpty()) leagueName = "leagueName";
         return new League(visitor, leagueName, 1);
     }
 
@@ -121,7 +117,8 @@ public class League {
 
     public boolean endLeagueThisMonth() {
         if (!this.isActive()) return false;
-        LocalDateTime localDateAndTime = LocalDateTime.now().with(lastDayOfMonth());;
+        LocalDateTime localDateAndTime = LocalDateTime.now().with(lastDayOfMonth());
+        ;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HH:mm-ssSSS-nnnnnnnnn");
         String result = localDateAndTime.format(formatter);
         this.ended = result.substring(0, 20);
@@ -137,7 +134,7 @@ public class League {
         DateTimeFormatterBuilder dateTimeFormatterBuilder = new DateTimeFormatterBuilder()
                 .append(DateTimeFormatter.ofPattern("yyyyMMdd-HH:mm-ssSSS"));
         DateTimeFormatter dateTimeFormatter = dateTimeFormatterBuilder.toFormatter();
-        LocalDate ended = LocalDate.parse(this.ended,dateTimeFormatter);
+        LocalDate ended = LocalDate.parse(this.ended, dateTimeFormatter);
         int days = Period.between(yesterday, ended).getDays();
         return days > 0;
     }
@@ -167,7 +164,7 @@ public class League {
     public String toString() {
         return "(" +
                 "leagueId=" + this.leagueId +
-                ", visitorId=" + (this.visitor == null? "": this.visitor.getVisitorId()) +
+                ", visitorId=" + (this.visitor == null ? "" : this.visitor.getVisitorId()) +
                 ", name=" + this.name +
                 ", nameSequence=" + this.nameSequence +
                 ", active=" + this.active +

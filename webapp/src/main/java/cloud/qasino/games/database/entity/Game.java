@@ -3,16 +3,12 @@ package cloud.qasino.games.database.entity;
 import cloud.qasino.games.database.entity.enums.game.GameState;
 import cloud.qasino.games.database.entity.enums.game.Style;
 import cloud.qasino.games.database.entity.enums.game.Type;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -48,7 +44,6 @@ import java.util.Objects;
 })
 public class Game {
 
-    // @formatter:off
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "GAME_ID", nullable = false)
@@ -73,11 +68,13 @@ public class Game {
     @Column(name = "STATE", length = 50, nullable = false)
     @Setter(AccessLevel.NONE)
     private GameState state;
+
     public void setState(GameState state) {
         this.previousState = this.state;
         this.state = state;
         setUpdated();
     }
+
     @Enumerated(EnumType.STRING)
     @Column(name = "PREVIOUS_STATE", length = 50, nullable = true)
     private GameState previousState;
@@ -319,22 +316,24 @@ public class Game {
     }
 
     @Override
-    public int hashCode() { return Objects.hash(gameId); }
+    public int hashCode() {
+        return Objects.hash(gameId);
+    }
 
     @Override
     public String toString() {
         return "(" +
                 "gameId=" + this.gameId +
-                ", leagueId=" + (this.league == null? "": this.league.getLeagueId()) +
+                ", leagueId=" + (this.league == null ? "" : this.league.getLeagueId()) +
                 ", initiator=" + this.initiator +
                 ", state=" + this.state +
                 ", previousState=" + this.previousState +
                 ", type=" + this.type +
                 ", style=" + this.style +
                 ", ante=" + this.ante +
-                ", cardsCount=" + (this.cards == null? "null": this.cards.size()) +
-                ", playerCount=" + (this.players == null? "null": this.players.size()) +
-                ", playingId=" + (this.playing == null? "null": this.playing.getPlayingId()) +
+                ", cardsCount=" + (this.cards == null ? "null" : this.cards.size()) +
+                ", playerCount=" + (this.players == null ? "null" : this.players.size()) +
+                ", playingId=" + (this.playing == null ? "null" : this.playing.getPlayingId()) +
                 ")";
     }
 }
