@@ -8,7 +8,6 @@ import cloud.qasino.games.database.service.VisitorService;
 import cloud.qasino.games.dto.Qasino;
 import cloud.qasino.games.dto.model.VisitorDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +69,7 @@ public class AbstractThymeleafController {
 //            log.info("Qasino.getStatistics pretty print = {} ", prettyPrint(qasino.getStatistics()));
         } catch (JsonProcessingException e) {
             try {
-                var gson = new Gson();
+//                var gson = new Gson();
                 log.info("Qasino gson (pretty print failed) = {} ", gson.toJson(qasino));
             } catch (StackOverflowError s){
                 log.info("Qasino gson and pretty print failed");
