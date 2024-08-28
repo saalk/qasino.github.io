@@ -431,10 +431,10 @@
 					<compilerArgs>
 						<arg>-Xlint:unchecked</arg>
 					</compilerArgs>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
+					<source>17</source>
+					<target>17</target>
 					<annotationProcessorPaths>
-						// The order of the processors is important.
+						<!-- The order of the processors is important.-->
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
