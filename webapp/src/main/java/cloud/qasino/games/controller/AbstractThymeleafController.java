@@ -70,7 +70,7 @@ public class AbstractThymeleafController {
         } catch (JsonProcessingException e) {
             try {
 //                var gson = new Gson();
-                log.info("Qasino gson (pretty print failed) = {} ", gson.toJson(qasino));
+                log.info("Qasino gson (pretty print failed) = {} ", "gson.toJson(qasino)");
             } catch (StackOverflowError s){
                 log.info("Qasino gson and pretty print failed");
             }
