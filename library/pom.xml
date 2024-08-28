@@ -4,16 +4,20 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>cloud.qasinoResponse.games</groupId>
+		<groupId>cloud.qasino.games</groupId>
 		<artifactId>CardGames</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>library</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-	<name>CardGamesLibrary</name>
-	<packaging>jar</packaging>
+	<version>2.0.0-SNAPSHOT</version>
+<!--	<name>CardGamesLibrary</name>-->
+	<packaging>pom</packaging>
 
+	<modules>
+		<module>cloud-qasino-rules</module>
+		<module>cloud-qasino-avatar</module>
+	</modules>
 	<properties>
 		<lombok.version>1.18.30</lombok.version>
 		<!-- 3: utility -->

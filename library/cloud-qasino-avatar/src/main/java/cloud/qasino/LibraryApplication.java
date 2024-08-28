@@ -1,4 +1,4 @@
-package cloud.qasino.games.library;
+package cloud.qasino;
 
 /**
  * this module which consists of rest services can also run without web module.

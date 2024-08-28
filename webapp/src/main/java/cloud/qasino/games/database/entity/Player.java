@@ -4,14 +4,25 @@ import cloud.qasino.games.database.entity.enums.player.AiLevel;
 import cloud.qasino.games.database.entity.enums.player.Avatar;
 import cloud.qasino.games.database.entity.enums.player.PlayerType;
 import cloud.qasino.games.database.security.Visitor;
-import com.fasterxml.jackson.annotation.*;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -98,12 +109,12 @@ public class Player {
     // GaWi: one [Player] is the Winner of the GameSubTotals in the end
     @OneToOne(mappedBy = "player", cascade = CascadeType.DETACH)
     // just a reference the fk column is in "game" not here!
-    private Result result;// = new Result();
+    private Result result;
 
     // HO: A [Player] holds one or more [Card]s after playing
     @OneToMany(mappedBy = "hand", cascade = CascadeType.DETACH)
     // just a reference, the actual fk column is in "game" not here !
-    final private List<Card> cards = new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
 
     public Player() {
         LocalDateTime localDateAndTime = LocalDateTime.now();
@@ -129,11 +140,7 @@ public class Player {
         this.avatarName = avatarName;
         this.aiLevel = aiLevel;
 
-        if (aiLevel == AiLevel.HUMAN) {
-            this.human = true;
-        } else {
-            this.human = false;
-        }
+        this.human = aiLevel == AiLevel.HUMAN;
     }
 
     public static Player buildDummyBot(Game game, Avatar avatar, AiLevel aiLevel) {
@@ -141,22 +148,20 @@ public class Player {
         if (aiLevel == null) aiLevel = AiLevel.AVERAGE;
         return new Player(null, game, PlayerType.BOT, 99, 99, 99, avatar, "avatarName", aiLevel);
     }
+
     public static Player buildDummyHuman(Visitor visitor, Game game, Avatar avatar) {
         if (avatar == null) avatar = Avatar.GOBLIN;
-        return new Player(visitor, game, PlayerType.INITIATOR,99, 99, 99, avatar, "avatarName", AiLevel.HUMAN);
+        return new Player(visitor, game, PlayerType.INITIATOR, 99, 99, 99, avatar, "avatarName", AiLevel.HUMAN);
     }
+
     public static Player buildDummyInvitee(Visitor visitor, Game game, Avatar avatar) {
         if (avatar == null) avatar = Avatar.GOBLIN;
-        return new Player(visitor, game, PlayerType.INVITED,99, 99, 99, avatar, "avatarName", AiLevel.HUMAN);
+        return new Player(visitor, game, PlayerType.INVITED, 99, 99, 99, avatar, "avatarName", AiLevel.HUMAN);
     }
 
     public void setAiLevel(AiLevel aiLevel) {
         this.aiLevel = aiLevel;
-        if (aiLevel == AiLevel.HUMAN) {
-            this.human = true;
-        } else {
-            this.human = false;
-        }
+        this.human = aiLevel == AiLevel.HUMAN;
     }
 
     @Override
@@ -175,18 +180,18 @@ public class Player {
     @Override
     public String toString() {
         return "(" +
-                "playerId=" + this.playerId +
-                ", visitorId=" + (this.visitor == null? "": this.visitor.getVisitorId()) +
-                ", gameId=" + (this.game == null? "": this.game.getGameId()) +
-                ", human=" + this.human +
-                ", role=" + (this.playerType == null ? "": this.playerType.getLabel()) +
-                ", fiches=" + this.fiches +
-                ", seat=" + this.seat +
-                ", avatar=" + this.avatar +
-                ", aiLevel=" + this.aiLevel +
-                ", winner=" + this.winner +
-                ", resultId=" + (this.result == null? "": this.result.getResultId()) +
-                ")";
+                "playerId=" + this.playerId
+                + ", visitorId=" + (this.visitor == null ? "" : this.visitor.getVisitorId())
+                + ", gameId=" + (this.game == null ? "" : this.game.getGameId())
+                + ", human=" + this.human
+                + ", role=" + (this.playerType == null ? "" : this.playerType.getLabel())
+                + ", fiches=" + this.fiches
+                + ", seat=" + this.seat
+                + ", avatar=" + this.avatar
+                + ", aiLevel=" + this.aiLevel
+                + ", winner=" + this.winner
+                + ", resultId=" + (this.result == null ? "" : this.result.getResultId())
+                + ")";
     }
 }
 

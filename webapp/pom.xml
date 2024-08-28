@@ -4,18 +4,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>cloud.qasinoResponse.games</groupId>
+		<groupId>cloud.qasino.games</groupId>
 		<artifactId>CardGames</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>webapp</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-	<name>CardGamesWebApp</name>
+	<version>2.0.0-SNAPSHOT</version>
+<!--	<name>CardGamesWebApp</name>-->
 	<packaging>war</packaging>
 
 	<properties>
-		<start-class>cloud.qasinoResponse.games.GamesApplication</start-class>
+		<start-class>cloud.qasino.games.GamesApplication</start-class>
 
 		<!-- 1: spring boot and web development -->
 		<spring-boot.version>3.2.5</spring-boot.version>
@@ -51,7 +51,7 @@
 		<version.swagger>2.3.1</version.swagger>
 
 		<!-- 6: logging -->
-				<logback-core.version>1.5.6</logback-core.version>
+		<logback-core.version>1.5.6</logback-core.version>
 <!--		<logback.version>1.2.11</logback.version>-->
 
 		<!-- 7: test -->
@@ -74,9 +74,9 @@
 
 		<!-- refer  to library first -->
 		<dependency>
-			<groupId>cloud.qasinoResponse.games</groupId>
-			<artifactId>library</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<groupId>cloud.qasino</groupId>
+			<artifactId>cloud-qasino-rules</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- security -->
@@ -345,8 +345,29 @@
     </dependencies>
 
 	<build>
-
 		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<configLocation>google_checks.xml</configLocation>
+					<consoleOutput>true</consoleOutput>
+					<failsOnError>true</failsOnError>
+					<failOnViolation>true</failOnViolation>
+					<includeTestSourceDirectory>true</includeTestSourceDirectory>
+					<excludes>**/generated/**/*</excludes>
+				</configuration>
+			</plugin>
 			<!-- tell Maven to copy the jar files that your app depends on to
 			the target/dependency directory.-->
 			<plugin>
@@ -382,6 +403,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<!-- The MojoHaus project is a collection of plugins for Apache Maven 2 & 3 -->
 			<plugin>
 				<!-- when you want to manage the versions of artifacts in a project's POM -->
@@ -427,6 +449,7 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
 			<!--separating it and unit tests directories-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
