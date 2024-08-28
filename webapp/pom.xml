@@ -32,11 +32,11 @@
 
 		<!-- 3: utility -->
 		<org.mapstruct.version>1.6.0.Beta1</org.mapstruct.version>
-		<commons-collections4.version>4.4</commons-collections4.version>
-		<commons-io.version>2.15.1</commons-io.version>
+<!--		<commons-collections4.version>4.4</commons-collections4.version>-->
+<!--		<commons-io.version>2.15.1</commons-io.version>-->
 		<!--		<commons-text.version>1.11</commons-text.version>-->
-		<commons-lang3.version>3.9</commons-lang3.version>
-		<commons-text.version>1.10.0</commons-text.version>
+<!--		<commons-lang3.version>3.9</commons-lang3.version>-->
+<!--		<commons-text.version>1.10.0</commons-text.version>-->
 		<lombok.version>1.18.30</lombok.version>
 
 		<!-- 4: GraphQL dependencies -->
@@ -46,9 +46,9 @@
 
 		<!-- 5: readability -->
 		<checkstyle-maven-plugin.version>3.2.0</checkstyle-maven-plugin.version>
-		<plantuml-core.version>1.0.51</plantuml-core.version>
-		<swagger-codegen-maven-plugin>2.4.39</swagger-codegen-maven-plugin>
-		<version.swagger>2.3.1</version.swagger>
+<!--		<plantuml-core.version>1.0.51</plantuml-core.version>-->
+<!--		<swagger-codegen-maven-plugin>2.4.39</swagger-codegen-maven-plugin>-->
+<!--		<version.swagger>2.3.1</version.swagger>-->
 
 		<!-- 6: logging -->
 		<logback-core.version>1.5.6</logback-core.version>
@@ -56,7 +56,7 @@
 
 		<!-- 7: test -->
 		<mockito-core.version>5.11.0</mockito-core.version>
-		<tomakehurst-wiremock.version>2.35.1</tomakehurst-wiremock.version>
+<!--		<tomakehurst-wiremock.version>2.35.1</tomakehurst-wiremock.version>-->
 		<junit>4.13.2</junit>
 
 		<!-- 8: maven plugins to parent pom -->
@@ -272,11 +272,11 @@
 <!--			<artifactId>springfox-swagger-ui</artifactId>-->
 <!--			<version>3.0.0</version>-->
 <!--		</dependency>-->
-		<dependency>
-			<groupId>com.credibledoc</groupId>
-			<artifactId>plantuml-core</artifactId>
-			<version>1.0.51</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.credibledoc</groupId>-->
+<!--			<artifactId>plantuml-core</artifactId>-->
+<!--			<version>1.0.51</version>-->
+<!--		</dependency>-->
 		<!--		<dependency>-->
 		<!--			<groupId>net.sourceforge.plantuml</groupId>-->
 		<!--			<artifactId>plantuml</artifactId>-->
@@ -291,12 +291,12 @@
 		</dependency>
 
 		<!-- 7: test -->
-		<dependency>
-			<groupId>com.github.tomakehurst</groupId>
-			<artifactId>wiremock-jre8</artifactId>
-			<version>${tomakehurst-wiremock.version}</version>
-			<scope>test</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.github.tomakehurst</groupId>-->
+<!--			<artifactId>wiremock-jre8</artifactId>-->
+<!--			<version>${tomakehurst-wiremock.version}</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.junit.vintage</groupId>
 			<artifactId>junit-vintage-engine</artifactId>
