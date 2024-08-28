@@ -1,1 +1,1 @@
-web: java jar -cp target/classes:target/dependency/* cloud.qasino.games.GamesApplication -Dspring.profiles.active=dev
+web: java war -cp target/classes:target/dependency/* cloud.qasino.games.GamesApplication -Dspring.profiles.active=dev
